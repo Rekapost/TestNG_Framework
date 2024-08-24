@@ -1,0 +1,11 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Build and Test') {
+            steps {
+                bat 'C:\\Users\\nreka\\git\\repository\\Testng_Framework\\run.bat'
+            }
+        }
+    }
+}
