@@ -4,9 +4,11 @@ import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
 import org.testng.ITestContext;
 import org.testng.ITestResult;
 import org.testng.TestListenerAdapter;
+
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.Status;
@@ -28,7 +30,7 @@ public class Reporting extends TestListenerAdapter{
 		try {
 			htmlReporter.loadXMLConfig(System.getProperty("user.dir")+"/extent-config.xml");
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}		
 		
@@ -45,6 +47,7 @@ public class Reporting extends TestListenerAdapter{
 		htmlReporter.config().setTheme(Theme.DARK);
 	 }*/
 
+        @Override
 	public void onStart(ITestContext testContext)
 	{
 		String timeStamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new Date());//time stamp
@@ -61,8 +64,7 @@ public class Reporting extends TestListenerAdapter{
 			//htmlReporter.loadXMLConfig(System.getProperty("user.dir")+"/extent-config.xml");
 			htmlReporter.loadXMLConfig("extent_config.xml");
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println(e);
 		}
 		
 		
@@ -77,12 +79,14 @@ public class Reporting extends TestListenerAdapter{
 		//htmlReporter.config().setTestViewChartLocation(ChartLocation.TOP);
 		htmlReporter.config().setTheme(Theme.DARK);
 	}
-	public void onTestSuccess(ITestResult tr)
+        @Override
+		public void onTestSuccess(ITestResult tr)
 	{
 	  logger=extent.createTest(tr.getName());//create new entry in the report
 	  logger.log(Status.PASS, MarkupHelper.createLabel(tr.getName(), ExtentColor.GREEN));//Send passed info
 	}
-	public void onTestFailure(ITestResult tr)
+        @Override
+		public void onTestFailure(ITestResult tr)
 	{
 		logger=extent.createTest(tr.getName());//create new entry in the report
 		logger.log(Status.FAIL, MarkupHelper.createLabel(tr.getName(), ExtentColor.RED));
@@ -97,12 +101,14 @@ public class Reporting extends TestListenerAdapter{
 			
 		}
 	}
+        @Override
 		public void onTestSkipped(ITestResult tr)
 		{
 			logger=extent.createTest(tr.getName());
 			logger.log(Status.SKIP, MarkupHelper.createLabel(tr.getName(), ExtentColor.ORANGE));
 		}
 		
+        @Override
 		public void onFinish(ITestContext testContext)
 		{
 			extent.flush();

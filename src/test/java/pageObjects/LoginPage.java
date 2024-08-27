@@ -66,7 +66,7 @@ public class LoginPage {
 	  }
 	
 	public void loginDDT(String userName, String passWord) throws InterruptedException {
-		// TODO Auto-generated method stub		
+			
 		username.clear();
 		username.sendKeys(userName);
 		password.clear();

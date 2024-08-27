@@ -1,6 +1,5 @@
 package testCases;
 import org.testng.annotations.Test;
-import pageObjects.SearchCustomerPage;
 
 
 public class AddCustomerTestCase extends BaseClass{

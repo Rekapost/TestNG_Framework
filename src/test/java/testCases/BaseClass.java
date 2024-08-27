@@ -3,6 +3,7 @@ import java.io.File;
 import java.io.IOException;
 import java.time.Duration;
 import java.util.concurrent.TimeUnit;
+
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
@@ -19,7 +20,9 @@ import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.io.FileHandler;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Optional;
 import org.testng.annotations.Parameters;
+
 import io.github.bonigarcia.wdm.WebDriverManager;
 import utilities.ConfigReader;
 import utilities.Loggerload;
@@ -50,9 +53,10 @@ public class BaseClass  {
 //	System.getProperty("user.dir")= java class only   ==  ./
 //	./   java class and properties file 
 	
+	@SuppressWarnings("deprecation")
 	@Parameters("browser")    // passing browser type through testNg.xml file 
 	@BeforeClass
-	public void setup(String br)  // so passing that parameter browser as br 
+	public void setup(@Optional("chrome")String br)  // so passing that parameter browser as br 
 	//public void setup()  
 	{			
 				// LOG4J LOGGER CONFIGURATION

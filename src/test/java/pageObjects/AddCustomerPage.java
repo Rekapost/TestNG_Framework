@@ -1,5 +1,4 @@
 package pageObjects;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -63,11 +62,11 @@ public class AddCustomerPage {
 		       txtcustomer_lastname_xpath.sendKeys(lname);
 		}
 		public void setGender(String gender) {
-		        if (gender=="Male")
+		        if ("Male".equals(gender))
 		        {
 		           rdmalecustomer_gender_xpath.click();
 		        }
-		        else if (gender=="Female")
+		        else if ("Female".equals(gender))
 		        {
 		            rdfemalecustomer_gender_xpath.click();
 		        } 
@@ -87,13 +86,13 @@ public class AddCustomerPage {
 		 {
 		 //      setcustomerroles.click();
 		       
-			        if (role=="Registered") {
+			        if ("Registered".equals(role)) {
 			           lstitemcustroleregi_xpath.click();
 			        }
-		           else if (role=="Administrators") {
+		           else if ("Administrators".equals(role)) {
 		            lstitemcustroleradmin_xpath.click();
 		           }
-		           else if( role=="Guests")
+		           else if( "Guests".equals(role))
 		           {// here user can be registered user (has account) or guest(no account), only one
 		            //time.sleep(3)  // already registered will be there , if selecting guest ,
 		           // u have to remove registered by clicking again on registered
@@ -101,10 +100,10 @@ public class AddCustomerPage {
 		            // then click guests and guests will be saved in the variable listitem
 		            lstitemcustroleguest_xpath.click();
 		 			}
-		          else if (role=="Registered") {
+		          else if ("Registered".equals(role)) {
 		            lstitemcustroleregi_xpath.click();
 		          }
-		          else if (role=="Vendors")
+		          else if ("Vendors".equals(role))
 		          {
 		            lstitemcustrolevend_xpath.click();
 		       

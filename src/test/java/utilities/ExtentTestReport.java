@@ -2,10 +2,11 @@ package utilities;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
 import org.openqa.selenium.WebDriver;
-import org.testng.ITestContext;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
+
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.reporter.ExtentHtmlReporter;
@@ -25,7 +26,7 @@ public class ExtentTestReport {
 		try {
 			htmlReporter.loadXMLConfig(System.getProperty("user.dir")+"/extent-config.xml");
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
 		htmlReporter.config().setDocumentTitle("nopcommerce test project"); // title of report

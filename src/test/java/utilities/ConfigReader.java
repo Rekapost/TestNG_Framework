@@ -2,9 +2,7 @@ package utilities;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.Properties;
-
 public class ConfigReader {
 // as u create object for the configReader class , constructor will be invoked and propertie file  will be loaded ,
 // then u have read each  and every value by adding  method  for each and every variable  to read their value 
