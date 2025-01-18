@@ -1,9 +1,11 @@
 package testCases;
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.time.Duration;
 import java.util.concurrent.TimeUnit;
-
+import utilities.chainTestListener;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
@@ -11,15 +13,17 @@ import org.openqa.selenium.OutputType;
 import org.openqa.selenium.PageLoadStrategy;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.edge.EdgeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.io.FileHandler;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Optional;
 import org.testng.annotations.Parameters;
 
@@ -27,6 +31,7 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 import utilities.ConfigReader;
 import utilities.Loggerload;
 
+@Listeners(chainTestListener.class)
 public class BaseClass  {
 	public static WebDriver driver;
 	ConfigReader readConfig=new ConfigReader();
@@ -56,7 +61,7 @@ public class BaseClass  {
 	@SuppressWarnings("deprecation")
 	@Parameters("browser")    // passing browser type through testNg.xml file 
 	@BeforeClass
-	public void setup(@Optional("chrome")String br)  // so passing that parameter browser as br 
+	public void setup(@Optional("chrome")String br) throws MalformedURLException  // so passing that parameter browser as br 
 	//public void setup()  
 	{			
 				// LOG4J LOGGER CONFIGURATION
@@ -83,18 +88,52 @@ public class BaseClass  {
 //		WebDriverManager.chromedriver().clearDriverCache().setup();	
 //	    driver = WebDriverManager.chromedriver().create();
 			
-			System.setProperty("webdriver.chrome.driver", "Chrome_Driver_126/chromedriver.exe");
+			//System.setProperty("webdriver.chrome.driver", "Chrome_Driver_126/chromedriver.exe");
+			//WebDriverManager.chromedriver().setup();
+			//System.setProperty("webdriver.chrome.driver", "/home/TestNG-Azure/Chrome_Driver_126/chromedriver");
+			//System.setProperty("webdriver.chrome.driver", "Chrome_Driver_126/chromedriver.exe");
+			// Check if running inside Docker (or any Linux-based environment)
+			if (System.getProperty("os.name").toLowerCase().contains("linux")) {
+    				System.setProperty("webdriver.chrome.driver", "/usr/local/bin/chromedriver");
+			} else {
+    			// Windows path, use this when running locally in Windows
+    				System.setProperty("webdriver.chrome.driver", "C:\\Users\\nreka\\vscodedevops\\TestNG-Azure\\src\\test\\resources\\Chrome_Driver_126\\chromedriver.exe");
+}
+			//System.setProperty("webdriver.chrome.driver", "/usr/local/bin/chromedriver");
+			//WebDriverManager.chromedriver().setup();
 			ChromeOptions chromeOptions = new ChromeOptions();
-			chromeOptions.setPageLoadStrategy(PageLoadStrategy.NORMAL);
-			chromeOptions.setAcceptInsecureCerts(true);
-			chromeOptions.setScriptTimeout(Duration.ofSeconds(30));
-			chromeOptions.setPageLoadTimeout(Duration.ofMillis(30000));
-			chromeOptions.setImplicitWaitTimeout(Duration.ofSeconds(30));
-			chromeOptions.addArguments("--remote-allow-origins=*");
+			//chromeOptions.setBinary("/usr/bin/google-chrome-stable");  // Path to Chrome binary
+			//chromeOptions.setBinary("/usr/bin/google-chrome"); // This is the path where Chrome is installed in Docker
+			//chromeOptions.setPageLoadStrategy(PageLoadStrategy.NORMAL);
+			//chromeOptions.setAcceptInsecureCerts(true);
+			//chromeOptions.setScriptTimeout(Duration.ofSeconds(30));
+			//chromeOptions.setPageLoadTimeout(Duration.ofMillis(30000));
+			//chromeOptions.setImplicitWaitTimeout(Duration.ofSeconds(30));
+			chromeOptions.addArguments("--disable-logging");
+			//chromeOptions.addArguments("--remote-allow-origins=*");
+			//chromeOptions.addArguments("--headless");  // Run Chrome in headless mode (no GUI)
+			//chromeOptions.addArguments("--no-sandbox");  // Avoid running into sandbox issues in Docker
+			chromeOptions.addArguments("--disable-dev-shm-usage");  // Overcome issues with limited shared memory in containers
+			//chromeOptions.addArguments("--remote-debugging-port=9222");  // Enable debugging if needed
+			//chromeOptions.addArguments("--headless", "--no-sandbox", "--disable-gpu");
+			//chromeOptions.addArguments("--headless", "--no-sandbox", "--disable-gpu", "--disable-dev-shm-usage");
+			chromeOptions.addArguments("--headless", "--disable-gpu", "--no-sandbox", "--remote-allow-origins=*");
 			driver =new ChromeDriver(chromeOptions);
+          
+			//driver = new RemoteWebDriver(new URL("http://localhost:5555/wd/hub"), chromeOptions);
+			//driver = new RemoteWebDriver(new URL("http://localhost:6666/wd/hub"),chromeOptions);
 			driver.manage().deleteAllCookies();
 		}
-		
+		//wget https://github.com/SeleniumHQ/selenium/releases/download/selenium-4.27.0/selenium-server-4.27.0.jar
+		//java -jar selenium-server-4.27.0.jar hub
+		//docker pull selenium/standalone-chrome
+        //docker run -d -p 5555:4444 --name selenium-hub1 selenium/standalone-chrome
+		//curl http://localhost:5555/wd/hub/status
+		//http://localhost:5555/grid/console
+		//docker stop selenium-hub
+		//docker rm selenium-hub
+		//docker restart selenium-hub
+
 		else if(br.equalsIgnoreCase("firefox")){
 			Loggerload.info("Testing on firefox");
 			//System.setProperty("webdriver.gecko.driver",FIREFOX_DRIVER_LOCATION );
@@ -124,7 +163,11 @@ public class BaseClass  {
 				edgeOptions.setImplicitWaitTimeout(Duration.ofSeconds(20));				  
 				driver =new EdgeDriver(edgeOptions);		
 		}
-		driver.manage().timeouts().implicitlyWait(10,TimeUnit.SECONDS);
+			//driver = new ChromeDriver(options);
+			
+            driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS); // Increase timeout
+            driver.manage().timeouts().pageLoadTimeout(60, TimeUnit.SECONDS); // Longer page load timeout
+
 		driver.get(APP_URL);
 		
 	}	

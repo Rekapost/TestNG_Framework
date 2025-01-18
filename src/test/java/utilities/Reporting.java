@@ -62,7 +62,9 @@ public class Reporting extends TestListenerAdapter{
 		
 		try {
 			//htmlReporter.loadXMLConfig(System.getProperty("user.dir")+"/extent-config.xml");
-			htmlReporter.loadXMLConfig("extent_config.xml");
+	
+			//htmlReporter.loadXMLConfig("extent_config.xml");
+			htmlReporter.loadXMLConfig(System.getProperty("user.dir")+"/src/test/resources/extent_config.xml");
 		} catch (IOException e) {
 			System.out.println(e);
 		}

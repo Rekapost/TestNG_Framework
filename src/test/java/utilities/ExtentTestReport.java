@@ -24,7 +24,10 @@ public class ExtentTestReport {
 		String repName="Test-Report-" + timeStamp+".html";
 		htmlReporter= new ExtentHtmlReporter(System.getProperty("user.dir")+ "/test-output/"+ repName); //specify location
 		try {
-			htmlReporter.loadXMLConfig(System.getProperty("user.dir")+"/extent-config.xml");
+			//htmlReporter.loadXMLConfig(System.getProperty("user.dir")+"/src/test/resources/extent-config.xml");
+		
+		      htmlReporter.loadXMLConfig(System.getProperty("user.dir")+"/src/test/resources/extent_config.xml");
+
 		} catch (IOException e) {
 			
 			e.printStackTrace();

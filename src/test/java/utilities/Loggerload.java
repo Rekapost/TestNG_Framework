@@ -4,9 +4,11 @@ import org.apache.logging.log4j.Logger;
 public class Loggerload {
 	
 	// LOG4J2 LOGGER CONFIGURATION
-	private static Logger logger = (Logger) LogManager.getLogger();	
+	//private static Logger logger = (Logger) LogManager.getLogger();	
 	//private static Logger logger = LogManager.getLogger();
-	
+	private static Logger logger = LogManager.getLogger();
+
+
 	public static void info(String message) {
 		logger.info(message);
 	}
