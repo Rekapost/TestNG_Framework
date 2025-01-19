@@ -1,7 +1,9 @@
 package testCases;
 import java.io.IOException;
+
 import org.testng.Assert;
 import org.testng.annotations.Test;
+
 import pageObjects.LoginPage;
 import utilities.Loggerload;
 
@@ -23,8 +25,10 @@ public class TestCase extends BaseClass {
 		lp.username(USERNAME);
 		lp.password(PASSWORD);
 		lp.login();
-
+        utilities.chainTestListener.log("opening dashboard page:");
 		System.out.println("opening dashboard page:");
+		
+		
 		// "Dashboard / nopCommerce administration"
 		// PageFactory.initElements(driver, LoginPage.class);
 		// driver.findElement(By.xpath("//button[normalize-space()='Log in']")).click();
@@ -38,6 +42,8 @@ public class TestCase extends BaseClass {
 		if (driver.getTitle().equals("My Account") ){
 			Assert.assertTrue(true);
 			System.out.println(" successful login");
+			utilities.chainTestListener.log(" successful login");
+			//ChainTestListener.embed("C:\\Users\\nreka\\Resume\\ghfgn.png", "image/png");
 		}
 		else 
 		{
@@ -51,6 +57,8 @@ public class TestCase extends BaseClass {
 		// driver.getTitle());
 		logger.info("back to home page :");     //log4j  base class
 		System.out.println("back to home page :");
+		utilities.chainTestListener.log("back to home page :");
+		//ChainTestListener.embed(new File("/Users/nreka/Resume/ghfgn.png"), "image/png");
 		driver.close();
 	}
 

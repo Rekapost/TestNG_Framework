@@ -2,10 +2,9 @@ package testCases;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
-import java.net.URL;
 import java.time.Duration;
 import java.util.concurrent.TimeUnit;
-import utilities.chainTestListener;
+
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
@@ -13,23 +12,27 @@ import org.openqa.selenium.OutputType;
 import org.openqa.selenium.PageLoadStrategy;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.edge.EdgeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.io.FileHandler;
-import org.openqa.selenium.remote.RemoteWebDriver;
+import org.testng.ITestResult;
 import org.testng.annotations.AfterClass;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Optional;
 import org.testng.annotations.Parameters;
 
+import com.aventstack.chaintest.service.ChainPluginService;
+
 import io.github.bonigarcia.wdm.WebDriverManager;
 import utilities.ConfigReader;
 import utilities.Loggerload;
+import utilities.chainTestListener;
 
 @Listeners(chainTestListener.class)
 public class BaseClass  {
@@ -64,11 +67,12 @@ public class BaseClass  {
 	public void setup(@Optional("chrome")String br) throws MalformedURLException  // so passing that parameter browser as br 
 	//public void setup()  
 	{			
-				// LOG4J LOGGER CONFIGURATION
-				logger=Logger.getLogger("nopCommerce");  // create object for Logger class
-				//PropertyConfigurator.configure("log4j.properties");
+			// LOG4J LOGGER CONFIGURATION
+			logger=Logger.getLogger("nopCommerce");  // create object for Logger class
+			//PropertyConfigurator.configure("log4j.properties");
 			PropertyConfigurator.configure("src/test/resources/log4j.properties");
-			
+			ChainPluginService.getInstance().addSystemInfo("Build#", "1.0");
+			ChainPluginService.getInstance().addSystemInfo("Owner Name#", "Reka");
 			//else if(browser.equalsIgnoreCase("chrome")){
 		if(br.equalsIgnoreCase("chrome"))
 		{
@@ -172,6 +176,18 @@ public class BaseClass  {
 		
 	}	
 	
+	@AfterMethod
+		public void attachScreenshot(ITestResult result) {
+		if (result.isSuccess()) {
+			chainTestListener.log("Test passed");
+		} else {
+			chainTestListener.log("Test failed");
+			TakesScreenshot screenshot = (TakesScreenshot) driver;
+			byte[] screenshotBytes = screenshot.getScreenshotAs(OutputType.BYTES);
+			chainTestListener.embed(screenshotBytes, "image/png");
+		}
+	}
+
 	@AfterClass
 	public void tearDown()
 	{
