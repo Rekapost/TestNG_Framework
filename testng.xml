@@ -21,7 +21,7 @@
     <test name="ChromeTest_Local"> 
         <parameter name="browser" value="chrome" />
         <parameter name="isLambdaTest" value="false"/>
-        <parameter name="isHeadless" value="false"/>
+        <parameter name="isHeadless" value="true"/>
         <classes>
             <class name="testCases.TestCase"></class>
             <class name="testCases.TestCaseDDT"></class> 
