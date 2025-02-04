@@ -222,3 +222,11 @@ To ensure a clean build and avoid issues from old compiled files.
 To run tests defined in a specific TestNG configuration (testng.xml).
 Useful for custom test executions like running only regression tests or parallel test suites.
 `mvn clean test "-Dsurefire.suiteXmlFiles=testng.xml"cls`
+
+
+### containerized Jenkins environment, you can run Jenkins itself inside Docker.
+docker run -d --name jenkins \
+  -p 8080:8080 -p 50000:50000 \
+  -v /var/run/docker.sock:/var/run/docker.sock \
+  -v jenkins_home:/var/jenkins_home \
+  jenkins/jenkins:lts

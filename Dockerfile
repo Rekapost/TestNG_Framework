@@ -31,3 +31,4 @@ EXPOSE 8080
 #CMD ["mvn", "clean", "test"]
 #CMD ["tail", "-f", "/dev/null"]
 CMD mvn clean test && tail -f /dev/null
+
