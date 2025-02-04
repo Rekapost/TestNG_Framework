@@ -2,6 +2,7 @@ package utilities;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Properties;
 public class ConfigReader {
 // as u create object for the configReader class , constructor will be invoked and propertie file  will be loaded ,
@@ -18,12 +19,12 @@ public class ConfigReader {
 		try {
 			properties.load(stream);  // load config file at run time 
 			stream.close();
-		} catch (Exception e) {
-			e.printStackTrace();
+		} catch (IOException e) {
+			
 			System.out.println(" Exception is :"+ e.getMessage());
 		}
 	} catch (FileNotFoundException e) {
-		e.printStackTrace();
+		
 		throw new RuntimeException("Configuration.properties not found at " + propertyFilePath);
 	}
 	}

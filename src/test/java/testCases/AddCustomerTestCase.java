@@ -3,20 +3,18 @@ import org.testng.annotations.Test;
 
 
 public class AddCustomerTestCase extends BaseClass{
-	
-	
 
 	@Test
 	public void addingCustomer() {
 //	SearchCustomerPage searchcust=new SearchCustomerPage(driver);
 //	searchcust.setEmail("reka@gmail.com");
-//
+
 //	boolean status=searchCust.searchCustomerByEmail("reka@gmail.com");
 //    Assert.assertEquals(true,status);
-//
+
 //    searchCust=new searchCustomerPage(driver);
 //	searchCust.setFirstName("Reka");
-//	
+
 //	comparing one value with multiple value ,
 //	if matched , say record found  pass, else fail
 //	public void clickSearch()
@@ -24,7 +22,7 @@ public class AddCustomerTestCase extends BaseClass{
 //		btnSearch.click();
 //		waithelper.WaitForElement(btnSearch,30);	
 //	}
-//	
+	
 //	public int getNoOfRows() {
 //		return(tableRows.size());
 //	}

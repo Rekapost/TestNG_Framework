@@ -6,7 +6,7 @@ public class Loggerload {
 	// LOG4J2 LOGGER CONFIGURATION
 	//private static Logger logger = (Logger) LogManager.getLogger();	
 	//private static Logger logger = LogManager.getLogger();
-	private static Logger logger = LogManager.getLogger();
+	private static final Logger logger = LogManager.getLogger();
 
 
 	public static void info(String message) {

@@ -8,7 +8,7 @@ import pageObjects.LoginPage;
 import utilities.ExcelReader;
 
 
-public class TestCaseDDT extends BaseClass{
+public class TestCaseDDT extends BaseClass_Old{
 //	String[][] data=null;
 //	WebDriver driver;
 
@@ -38,10 +38,10 @@ public class TestCaseDDT extends BaseClass{
 	}
 		
 
-	@Test (dataProvider = "loginData")
+	@Test (dataProvider = "loginData", threadPoolSize = 4)
 	public void loginWithCredential(String userName,String passWord)
 	{
-		LoginPage lp=new LoginPage(driver);
+		LoginPage lp=new LoginPage(getDriver());
 		lp.username(userName);
 		lp.password(passWord);
 		lp.login();
@@ -64,7 +64,7 @@ public class TestCaseDDT extends BaseClass{
 	{
 		try 
 		{
-		driver.switchTo().alert();
+			getDriver().switchTo().alert();
 		return true;
 		}
 			catch(Exception e) {

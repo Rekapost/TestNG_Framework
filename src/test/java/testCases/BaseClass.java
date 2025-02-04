@@ -1,8 +1,8 @@
+
 package testCases;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
-import java.time.Duration;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.lang3.RandomStringUtils;
@@ -29,211 +29,167 @@ import org.testng.annotations.Parameters;
 
 import com.aventstack.chaintest.service.ChainPluginService;
 
-import io.github.bonigarcia.wdm.WebDriverManager;
 import utilities.ConfigReader;
-import utilities.Loggerload;
 import utilities.chainTestListener;
 
 @Listeners(chainTestListener.class)
-public class BaseClass  {
-	public static WebDriver driver;
-	ConfigReader readConfig=new ConfigReader();
-//	public  String BROWSER="chrome";
-//	public  String CHROME_DRIVER="webdriver.chrome.driver";
-//	public  String DRIVER_LOCATION="C:\\Users\\Reka\\eclipse-workspace\\CucumberBDD\\src\\test\\java\\drivers\\chromedriver.exe";
-//	public  String APP_URL="https://admin-demo.nopcommerce.com/";
-//	public  String USERNAME="admin@yourstore.com";
-//	public  String PASSWORD="admin";
-	
-	//public  String BROWSER=readConfig.getBrowserType();
-	public  String CHROME_DRIVER="webdriver.chrome.driver";
-	public  String CHROME_DRIVER_LOCATION=readConfig.getChromePath();
-	public  String FIREFOX_DRIVER_LOCATION=readConfig.getGeckoPath();
-	public  String EDGE_DRIVER_LOCATION=readConfig.getEdgePath();
-	public  String IE_DRIVER_LOCATION=readConfig.internetExplorerPath();
-	public  String APP_URL=readConfig.getApplicationUrl();
-	public  String USERNAME=readConfig.getUsername();
-	public  String PASSWORD=readConfig.getPassword();
-	public static Logger logger;
-	
-//	FIREFOX_DRIVER_LOCATION=./Drivers\\firefoxdriver.exe   ./ represents current project home directory
-//	EDGE_DRIVER_LOCATION=./Drivers\\edgedriver.exe
-//	System.getProperty("user.dir")= java class only   ==  ./
-//	./   java class and properties file 
-	
-	@SuppressWarnings("deprecation")
-	@Parameters("browser")    // passing browser type through testNg.xml file 
-	@BeforeClass
-	public void setup(@Optional("chrome")String br) throws MalformedURLException  // so passing that parameter browser as br 
-	//public void setup()  
-	{			
-			// LOG4J LOGGER CONFIGURATION
-			logger=Logger.getLogger("nopCommerce");  // create object for Logger class
-			//PropertyConfigurator.configure("log4j.properties");
-			PropertyConfigurator.configure("src/test/resources/log4j.properties");
-			ChainPluginService.getInstance().addSystemInfo("Build#", "1.0");
-			ChainPluginService.getInstance().addSystemInfo("Owner Name#", "Reka");
-			//else if(browser.equalsIgnoreCase("chrome")){
-		if(br.equalsIgnoreCase("chrome"))
-		{
-		//	System.setProperty(CHROME_DRIVER,DRIVER_LOCATION);	
-		//	System.setProperty(CHROME_DRIVER, System.getProperty("user.dir")+"//drivers//chromedriver.exe");		
-		//	driver=new ChromeDriver();  // instantiate chromedriver
-//		WebDriverManager.chromedriver().setup();
-//		ChromeOptions chromeOptions = new ChromeOptions();
-//		chromeOptions.setPageLoadStrategy(PageLoadStrategy.NORMAL);
-//		chromeOptions.setAcceptInsecureCerts(true);
-//		chromeOptions.setScriptTimeout(Duration.ofSeconds(30));
-//		chromeOptions.setPageLoadTimeout(Duration.ofMillis(30000));
-//		chromeOptions.setImplicitWaitTimeout(Duration.ofSeconds(20));
-//		chromeOptions.addArguments("--remote-allow-origins=*");	  
-//		driver =new ChromeDriver(chromeOptions);	
-			
-//		WebDriverManager.chromedriver().clearDriverCache().setup();	
-//	    driver = WebDriverManager.chromedriver().create();
-			
-			//System.setProperty("webdriver.chrome.driver", "Chrome_Driver_126/chromedriver.exe");
-			//WebDriverManager.chromedriver().setup();
-			//System.setProperty("webdriver.chrome.driver", "/home/TestNG-Azure/Chrome_Driver_126/chromedriver");
-			//System.setProperty("webdriver.chrome.driver", "Chrome_Driver_126/chromedriver.exe");
-			// Check if running inside Docker (or any Linux-based environment)
-			if (System.getProperty("os.name").toLowerCase().contains("linux")) {
-    				System.setProperty("webdriver.chrome.driver", "/usr/local/bin/chromedriver");
-			} else {
-    			// Windows path, use this when running locally in Windows
-    				System.setProperty("webdriver.chrome.driver", "C:\\Users\\nreka\\vscodedevops\\TestNG-Azure\\src\\test\\resources\\Chrome_Driver_126\\chromedriver.exe");
+public class BaseClass {
+    ConfigReader readConfig = new ConfigReader();
+    public static WebDriver driver;
+    public static Logger logger;
+     
+    // Configuration constants
+    public String browserType;
+    public boolean isLambdaTest;
+    public String APP_URL = readConfig.getApplicationUrl();
+    public String USERNAME = readConfig.getUsername();
+    public String PASSWORD = readConfig.getPassword();
+   
+    @BeforeClass
+    @Parameters({"browser", "isLambdaTest", "isHeadless"})
+    public void setup(@Optional("chrome") String browser, 
+                      @Optional("false") boolean isLambdaTest, 
+                      @Optional("false") boolean isHeadless,
+                      ITestResult result) throws MalformedURLException {
+        this.browserType = browser;
+        this.isLambdaTest = isLambdaTest;
+
+        // Initialize logger
+        logger = Logger.getLogger("nopCommerce");
+        PropertyConfigurator.configure("src/test/resources/log4j.properties");
+        // Initialize browser session
+        if (isLambdaTest) {
+            //initializeLambdaTestSession(browser, result.getMethod().getMethodName());
+            //initializeLambdaTestSession(browser, "DefaultTestMethodName"); // Use default or a placeholder test name here
+            // Dynamically use the class name or a default method name if required
+            String testName = this.getClass().getSimpleName(); // Or any custom naming logic
+            //String testName = this.getClass().getSimpleName() + "_" + result.getMethod().getMethodName();
+            initializeLambdaTestSession(browser, testName);
+        } else {
+            initializeLocalDriver(browser, isHeadless);
+        }
+        // System info for reports
+        ChainPluginService.getInstance().addSystemInfo("Build#", "1.0");
+        ChainPluginService.getInstance().addSystemInfo("Owner Name#", "Reka");
+        driver.get(APP_URL);
+    }
+
+    public void initializeLambdaTestSession(String browser, String testName) {
+        
+        driver = utilities.LambdaTestUtility.initializeLambdaTestSession(browser, testName);
+        
+    }
+
+    public void initializeLocalDriver(String browser, boolean isHeadless) {
+        //BrowserUtility browserUtility = new BrowserUtility(browser);
+        //driver = browserUtility.getDriver();
+        //setDriverOptions(browser, isHeadless);
+        if (browser.equalsIgnoreCase("chrome")) {            
+            ChromeOptions options = new ChromeOptions();
+            if (isHeadless) {
+                options.addArguments("--headless=new");  // Use the updated headless mode
+            }
+            options.addArguments("--remote-allow-origins=*"); // Add this to resolve potential CORS issues          
+            driver = new ChromeDriver(options);
+            
+        }
+
+    /*    Map<String, Consumer<Boolean>> browserMap = Map.of(
+        "chrome", this::initializeChromeDriver,
+        "firefox", this::initializeFirefoxDriver,
+        "edge", this::initializeEdgeDriver
+        );
+        browserMap.get(browser.toLowerCase()).accept(isHeadless);
+    */
+    }
+
+    public void setDriverOptions(String browser, boolean isHeadless) {
+        if (browser.equalsIgnoreCase("chrome")) {
+            initializeChromeDriver(isHeadless);
+        } else if (browser.equalsIgnoreCase("firefox")) {
+            initializeFirefoxDriver();
+        } else if (browser.equalsIgnoreCase("edge")) {
+            initializeEdgeDriver();
+        }
+        driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+        driver.manage().timeouts().pageLoadTimeout(60, TimeUnit.SECONDS);
+    }
+
+    public void initializeChromeDriver(boolean isHeadless) {
+        ChromeOptions options = new ChromeOptions();
+        if (isHeadless) {
+            options.addArguments("--headless", "--disable-gpu", "--no-sandbox", "--remote-allow-origins=*");
+        }
+        setDriverPath("chrome");
+        options.setPageLoadStrategy(PageLoadStrategy.NORMAL);
+        options.setAcceptInsecureCerts(true);
+        driver = new ChromeDriver(options);
+    }
+
+    public void initializeFirefoxDriver() {
+        FirefoxOptions options = new FirefoxOptions();
+        options.setPageLoadStrategy(PageLoadStrategy.NORMAL);
+        options.setAcceptInsecureCerts(true);
+        driver = new FirefoxDriver(options);
+    }
+
+    public void initializeEdgeDriver() {
+        EdgeOptions options = new EdgeOptions();
+        options.setPageLoadStrategy(PageLoadStrategy.NORMAL);
+        options.setAcceptInsecureCerts(true);
+        driver = new EdgeDriver(options);
+    }
+
+    public void setDriverPath(String browser) {
+    //    String driverPath = browser.equalsIgnoreCase("chrome") ? readConfig.getChromePath() :
+    //                         browser.equalsIgnoreCase("firefox") ? readConfig.getGeckoPath() : readConfig.getEdgePath();
+    //System.setProperty("webdriver." + browser.toLowerCase() + ".driver", driverPath);
+    String driverPath = "C:\\Users\\nreka\\vscodedevops\\TestNG-Framework\\src\\test\\resources\\ChromeDriver\\chromedriver.exe"; // Update this path
+    System.setProperty("webdriver.chrome.driver", driverPath);     
+    }
+
+    @AfterMethod
+    public void attachScreenshot(ITestResult result) {
+        if (!result.isSuccess()) {
+            captureScreenshot(driver, result.getMethod().getMethodName());
+            chainTestListener.log("Test failed: " + result.getMethod().getMethodName());
+            chainTestListener.embed(getScreenshotBytes(), "image/png");
+        }
+    }
+
+    @AfterClass
+    public void tearDown() {
+        if (isLambdaTest) {
+            utilities.LambdaTestUtility.quitSession();
+        } else {
+            driver.quit();
+        }
+    }
+
+    public byte[] getScreenshotBytes() {
+        TakesScreenshot screenshot = (TakesScreenshot) driver;
+        return screenshot.getScreenshotAs(OutputType.BYTES);
+    }
+
+    public void captureScreenshot(WebDriver driver, String testName) {
+        try {
+            TakesScreenshot screenshot = (TakesScreenshot) driver;
+            File sourceFile = screenshot.getScreenshotAs(OutputType.FILE);
+            //File destinationFile = new File("Screenshots/" + testName + ".png");
+            File destinationFile = new File("Screenshots/" + testName + "_" + RandomStringUtils.randomAlphanumeric(5) + ".png");
+
+            FileHandler.copy(sourceFile, destinationFile);
+            logger.info("Screenshot captured for test: " + testName);
+        } catch (IOException e) {
+            logger.error("Error capturing screenshot: " + e.getMessage());
+        }
+    }
+
+    public String randomString() {
+        return RandomStringUtils.randomAlphabetic(5);
+    }
+
+    public static String randomNumber() {
+        return RandomStringUtils.randomNumeric(4);
+    }
 }
-			//System.setProperty("webdriver.chrome.driver", "/usr/local/bin/chromedriver");
-			//WebDriverManager.chromedriver().setup();
-			ChromeOptions chromeOptions = new ChromeOptions();
-			//chromeOptions.setBinary("/usr/bin/google-chrome-stable");  // Path to Chrome binary
-			//chromeOptions.setBinary("/usr/bin/google-chrome"); // This is the path where Chrome is installed in Docker
-			//chromeOptions.setPageLoadStrategy(PageLoadStrategy.NORMAL);
-			//chromeOptions.setAcceptInsecureCerts(true);
-			//chromeOptions.setScriptTimeout(Duration.ofSeconds(30));
-			//chromeOptions.setPageLoadTimeout(Duration.ofMillis(30000));
-			//chromeOptions.setImplicitWaitTimeout(Duration.ofSeconds(30));
-			chromeOptions.addArguments("--disable-logging");
-			//chromeOptions.addArguments("--remote-allow-origins=*");
-			//chromeOptions.addArguments("--headless");  // Run Chrome in headless mode (no GUI)
-			//chromeOptions.addArguments("--no-sandbox");  // Avoid running into sandbox issues in Docker
-			chromeOptions.addArguments("--disable-dev-shm-usage");  // Overcome issues with limited shared memory in containers
-			//chromeOptions.addArguments("--remote-debugging-port=9222");  // Enable debugging if needed
-			//chromeOptions.addArguments("--headless", "--no-sandbox", "--disable-gpu");
-			//chromeOptions.addArguments("--headless", "--no-sandbox", "--disable-gpu", "--disable-dev-shm-usage");
-			chromeOptions.addArguments("--headless", "--disable-gpu", "--no-sandbox", "--remote-allow-origins=*");
-			driver =new ChromeDriver(chromeOptions);
-          
-			//driver = new RemoteWebDriver(new URL("http://localhost:5555/wd/hub"), chromeOptions);
-			//driver = new RemoteWebDriver(new URL("http://localhost:6666/wd/hub"),chromeOptions);
-			driver.manage().deleteAllCookies();
-		}
-		//wget https://github.com/SeleniumHQ/selenium/releases/download/selenium-4.27.0/selenium-server-4.27.0.jar
-		//java -jar selenium-server-4.27.0.jar hub
-		//docker pull selenium/standalone-chrome
-        //docker run -d -p 5555:4444 --name selenium-hub1 selenium/standalone-chrome
-		//curl http://localhost:5555/wd/hub/status
-		//http://localhost:5555/grid/console
-		//docker stop selenium-hub
-		//docker rm selenium-hub
-		//docker restart selenium-hub
-
-		else if(br.equalsIgnoreCase("firefox")){
-			Loggerload.info("Testing on firefox");
-			//System.setProperty("webdriver.gecko.driver",FIREFOX_DRIVER_LOCATION );
-			//System.setProperty(CHROME_DRIVER, System.getProperty("user.dir")+"//drivers//chromedriver.exe");	
-			//driver =new FirefoxDriver();
-			WebDriverManager.firefoxdriver().setup();
-			FirefoxOptions firefoxOptions = new FirefoxOptions();
-			firefoxOptions.setPageLoadStrategy(PageLoadStrategy.NORMAL);
-			firefoxOptions.setAcceptInsecureCerts(true);
-			firefoxOptions.setScriptTimeout(Duration.ofSeconds(30));
-			firefoxOptions.setPageLoadTimeout(Duration.ofMillis(30000));
-			firefoxOptions.setImplicitWaitTimeout(Duration.ofSeconds(20));			  
-			driver =new FirefoxDriver(firefoxOptions);				
-		}
-		 
-		 else if (br.equalsIgnoreCase("edge")) {
-			Loggerload.info("Testing on Edge");
-			 //System.setProperty("webdriver.edge.driver",EDGE_DRIVER_LOCATION );
-			 //driver = new EdgeDriver();
-			   
-			 	WebDriverManager.edgedriver().setup();
-				EdgeOptions edgeOptions = new EdgeOptions();
-				edgeOptions.setPageLoadStrategy(PageLoadStrategy.NORMAL);
-				edgeOptions.setAcceptInsecureCerts(true);
-				edgeOptions.setScriptTimeout(Duration.ofSeconds(30));
-				edgeOptions.setPageLoadTimeout(Duration.ofMillis(30000));
-				edgeOptions.setImplicitWaitTimeout(Duration.ofSeconds(20));				  
-				driver =new EdgeDriver(edgeOptions);		
-		}
-			//driver = new ChromeDriver(options);
-			
-            driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS); // Increase timeout
-            driver.manage().timeouts().pageLoadTimeout(60, TimeUnit.SECONDS); // Longer page load timeout
-
-		driver.get(APP_URL);
-		
-	}	
-	
-	@AfterMethod
-		public void attachScreenshot(ITestResult result) {
-		if (result.isSuccess()) {
-			chainTestListener.log("Test passed");
-		} else {
-			chainTestListener.log("Test failed");
-			TakesScreenshot screenshot = (TakesScreenshot) driver;
-			byte[] screenshotBytes = screenshot.getScreenshotAs(OutputType.BYTES);
-			chainTestListener.embed(screenshotBytes, "image/png");
-		}
-	}
-
-	@AfterClass
-	public void tearDown()
-	{
-		//driver.quit();	  ************************	
-	}
-	
-	public void captureScreen(WebDriver driver, String tname) throws IOException
-	{
-	    TakesScreenshot screenshot=(TakesScreenshot) driver;
-	    File sourceFile=screenshot.getScreenshotAs(OutputType.FILE);
-		File destinationFile = new File("Screenshots/Screenshots"+tname+".png");  
-		//FileUtils.copyFile(sourceFile3, destinationFile3); 
-		FileHandler.copy(sourceFile, destinationFile);
-		System.out.println("Screenshot Taken");
-	}	
-	
-	public String random_String() {		
-	String generatedString= RandomStringUtils.randomAlphabetic(5);  // 5 character string will be generated
-	return generatedString;
-// in test case 
-// 	String email=random_String()+"@gmail.com";
-//  addCust.custemailid(email);
-//	}
-	}
-	
-	public static String random_Number() {		
-		String generatedString2= RandomStringUtils.randomNumeric(4);  // 4 digits will be generated
-		return generatedString2;
-	// in test case 
-		}
-	
-/*	// to validate if particular page has any message like succcesfully registered 
-	boolean res=driver.getPageSource().contains("Customer Registered Successfully!!!");
-	if(res==true)
-	{
-		Assert.assertTrue(true);
-	}
-	else
-	{ 
-		captureScreen(driver, "addNewCustomer");  // testcasename
-		Assert.assertTrue(false);	
-	}
-*/	
-
-}
-//run.bat
-// bat file is batch file , executable file
-// cd C:\Users\Reka\eclipse-workspace\TestNG_Framework\Reka.TestNG_Framework_DDT
-//C:\Users\Reka\eclipse-workspace\TestNG_Framework\Reka.TestNG_Framework_DDT>mvn clean install

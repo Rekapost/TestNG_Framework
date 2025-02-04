@@ -1,22 +1,32 @@
 package pageObjects;
+import java.time.Duration;
+
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.CacheLookup;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 
 public class LoginPage {
 	
  WebDriver ldriver;	
- //WaitHelper waithelper;
+//WaitHelper waithelper;
  
 //using constructor to initialze webelements in pagefactory	
 	public LoginPage(WebDriver rdriver)
-	{   ldriver=rdriver;
-		PageFactory.initElements(rdriver,this);
+	{   
+		ldriver = rdriver;
+		initElements();
 		//waithelper=new WaitHelper(rdriver);
+	}
+
+	private void initElements() {
+		PageFactory.initElements(ldriver, this);
 	}
 	
 //  What is CacheLookup in Selenium?
@@ -47,9 +57,11 @@ public class LoginPage {
 	
 	public void username(String uname)
 	{
-		//waithelper.WaitForElement(username,30);
 		username.clear();
-		username.sendKeys(uname);
+		//waithelper.WaitForElement(username,30);
+		WebDriverWait wait = new WebDriverWait(ldriver, Duration.ofSeconds(10));
+		WebElement emailField = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("input-email")));
+		emailField.sendKeys(uname);
 	}
 	
 	public void password(String pwd)
