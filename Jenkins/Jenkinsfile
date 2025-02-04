@@ -2,10 +2,11 @@ pipeline {
 
   agent {
     docker {
-      image 'abhishekf5/maven-abhishek-docker-agent:v1'                // pre-configured environment for building and testing Java applications using Maven
-      args '--user root' 
+      image 'abhishekf5/maven-abhishek-docker-agent:v1'  // Pre-configured environment for building and testing Java applications using Maven
+      args '--user root'
     }
   }
+
   stages {
 
     stage('Checkout') {
@@ -37,7 +38,10 @@ pipeline {
       }
     }
 
-  }
+  } // <-- Closing 'stages'
+
+} // <-- Closing 'pipeline'
+
 
 /*
 pipeline {
