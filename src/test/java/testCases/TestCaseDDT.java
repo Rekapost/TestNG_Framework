@@ -8,7 +8,7 @@ import pageObjects.LoginPage;
 import utilities.ExcelReader;
 
 
-public class TestCaseDDT extends BaseClass_Old{
+public class TestCaseDDT extends BaseClassOriginal{
 //	String[][] data=null;
 //	WebDriver driver;
 

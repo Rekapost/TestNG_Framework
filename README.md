@@ -10,7 +10,7 @@ Go to the docker folder and run the following command
 `docker-compose -f docker-compose-h2.yml up` 
 open url for chaintest report = http://localhost:8081/
 
-## Verify the Port Availability
+### Verify the Port Availability
 Before starting your service, it's important to ensure that the port you're using (e.g., port `8081`) is free and not being used by another application. If the service fails to start, it could be because another application is already using the port.
 
 ### On Windows
@@ -26,8 +26,8 @@ taskkill /PID [PID] /F
  /target/chaintest/Index.html 
  /target/chaintest/Email.html
 
-# Set up a Selenium Grid with a Hub and a Chrome Node using Docker and Selenium. 
-## Prerequisites
+### Set up a Selenium Grid with a Hub and a Chrome Node using Docker and Selenium. 
+### Prerequisites
 
 Before you begin, ensure that you have the following installed:
 - Docker (for running containers)
@@ -78,7 +78,7 @@ Go to folder where allure-results folder is generated and run the below command
 ### Extent Report 
 /test-output/Test-Report-********.html
 
-#  Running your TestNG tests inside a Docker container. 
+##  Running your TestNG tests inside a Docker container. 
 ### 1. Dockerfile Setup
 Make sure your Dockerfile is set up correctly to build the image with all dependencies for TestNG.
 ### Build the image
@@ -105,7 +105,7 @@ Once the container is stopped, you can remove it:
 To avoid errors like "container already exists," remove the old container:
 `docker rm testng-container`
 
-# Chromedriver setup
+### Chromedriver setup
 System.setProperty(CHROME_DRIVER, System.getProperty("user.dir")+"//drivers//chromedriver.exe");		
 WebDriverManager.chromedriver().setup(); or WebDriverManager.chromedriver().clearDriverCache().setup();	
 or  WebDriverManager.chromedriver().browserVersion("132.0.6834.159").setup();
@@ -131,7 +131,7 @@ driver = WebDriverManager.chromedriver().create();
 driver.set(WebDriverManager.chromedriver().capabilities(chromeOptions).create());
   
 
-# To run classes in parallel
+## To run classes in parallel
 Thread Safety: Ensure ThreadLocal<WebDriver> Is Used
 private static final ThreadLocal<WebDriver> driver = new ThreadLocal<>();
 Since you're running in parallel, ensure you're using ThreadLocal<WebDriver> correctly. use getDriver() for any interactions.
@@ -144,7 +144,7 @@ parallel="classes": Runs entire test classes in parallel.
             <class name="testCases.TestCaseDDT"></class>
 </classes>
 
-# To run classes and methods in parallel
+## To run classes and methods in parallel
 parallel="both": Runs both test methods and test classes in parallel.
 class 1 with 1 method and class 2 with 1 dataprovider method that runs 4 times 
 <suite name="TestSuite" thread-count="4" parallel="both">
@@ -161,7 +161,7 @@ parallel="methods": Runs test methods in parallel within the same test class.
     <suite name="ParallelTestSuite" parallel="methods" thread-count="4">
     <class name="LoginTest"/>
 
-# Optional Parameter: It makes the parameter optional in the sense that the test can still run if the parameter isn't provided. You can configure it to fall back to a default browser like Chrome or Firefox, depending on what you need.
+### Optional Parameter: It makes the parameter optional in the sense that the test can still run if the parameter isn't provided. You can configure it to fall back to a default browser like Chrome or Firefox, depending on what you need.
 The @Optional("chrome") annotation in TestNG allows you to specify a default value for a method parameter in case the parameter is not provided explicitly via the testng.xml file or other test configuration.
 @Optional("chrome") String br
 
@@ -217,4 +217,8 @@ WebDriver driver = new RemoteWebDriver(new URL("https://hub.lambdatest.com/wd/hu
         <parameter name="isLambdaTest" value="true"/>
         <parameter name="isHeadless" value="true"/>
 
-        mvn clean test -Dsurefire.suiteXmlFiles=testng.xml
+### Run the tests through testng.xml 
+To ensure a clean build and avoid issues from old compiled files.
+To run tests defined in a specific TestNG configuration (testng.xml).
+Useful for custom test executions like running only regression tests or parallel test suites.
+`mvn clean test "-Dsurefire.suiteXmlFiles=testng.xml"cls`
