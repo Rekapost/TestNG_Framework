@@ -89,7 +89,11 @@ public class BaseClass {
             if (isHeadless) {
                 options.addArguments("--headless=new");  // Use the updated headless mode
             }
-            options.addArguments("--remote-allow-origins=*"); // Add this to resolve potential CORS issues          
+            options.addArguments("--no-sandbox");  // Disable the sandbox for root user
+            options.addArguments("--disable-dev-shm-usage");  // Overcome limited resource problems
+            options.addArguments("--disable-gpu");  // Disable GPU (recommended for headless)
+            options.addArguments("--remote-allow-origins=*"); // Avoid cross-origin issues
+
             driver = new ChromeDriver(options);
             
         }
