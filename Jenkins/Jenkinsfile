@@ -1,24 +1,33 @@
 pipeline {
-  agent none  // No global agent; define per stage
 
+  //agent any  // Use any available agent (Linux in this case)
+agent {
+    docker {
+      //image 'maven:3.8.5-jdk-11'  // Official Maven image with Java 11
+        image 'reka83/maven-chrome'  // Use your custom image
+    }
+  }
+
+/*tools {
+    maven 'Maven'  // Use the Maven installation configured in Jenkins
+  }
+*/ 
   stages {
+
     stage('Checkout') {
-      agent { docker { image 'maven:3.8.5-jdk-11' } }
       steps {
-        sh 'echo passed'
+        sh 'echo passed'  // Use 'sh' if on Linux , 'bat' if on Windows 
         git branch: 'master', url: 'https://github.com/Rekapost/TestNG_Framework.git'
       }
     }
 
     stage('Build and Test') {
-      agent { docker { image 'selenium/standalone-chrome:latest' } }
       steps {
-        sh 'mvn clean test -Dsurefire.suiteXmlFiles=testng.xml'
+        sh 'mvn clean test -Dsurefire.suiteXmlFiles=testng.xml'  // Use 'sh' if on Linux
       }
     }
   }
 }
-
 
 
 /*
