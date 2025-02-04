@@ -11,7 +11,7 @@ pipeline {
     stage('Clean') {
       steps {
         sh 'ls -ltr'
-        sh 'cd TestNG-Framework && mvn clean'
+        sh 'TestNG-Framework && mvn clean'
       }
     }
 
@@ -38,7 +38,7 @@ pipeline {
       steps {
         sh 'ls -ltr'
         // build the project and create a JAR file
-        sh 'cd TestNG-Framework && mvn clean package'
+        sh 'TestNG-Framework && mvn clean package'
       }
     }
 
@@ -49,7 +49,7 @@ pipeline {
       }
       steps {
         script {
-          sh 'cd TestNG-Framework && docker build -t ${DOCKER_IMAGE} .'
+          sh 'TestNG-Framework && docker build -t ${DOCKER_IMAGE} .'
           def dockerImage = docker.image("${DOCKER_IMAGE}")
           docker.withRegistry('https://index.docker.io/v1/', "docker-cred") {
             dockerImage.push()
