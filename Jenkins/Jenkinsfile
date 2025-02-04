@@ -1,23 +1,25 @@
 pipeline {
 
+  agent any  // Use any available agent
+
   stages {
 
     stage('Checkout') {
       steps {
-        bat 'echo passed'
+        bat 'echo passed'  // Use 'sh' if on Linux
         git branch: 'master', url: 'https://github.com/Rekapost/TestNG_Framework.git'
       }
     }
 
     stage('Build and Test') {
       steps {
-        bat 'mvn clean test -Dsurefire.suiteXmlFiles=testng.xml'
+        bat 'mvn clean test -Dsurefire.suiteXmlFiles=testng.xml'  // Use 'sh' if on Linux
       }
     }
 
-  } // <-- Closing 'stages'
+  }
 
-} // <-- Closing 'pipeline'
+}
 
 
 /*
