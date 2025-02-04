@@ -1,6 +1,6 @@
 pipeline {
 
-  //agent any  // Use any available agent (Linux in this case)
+  //agent any  // Use any available agent (sh - Linux , bat - Windows)
 agent {
     docker {
       //image 'maven:3.8.5-jdk-11'  // Official Maven image with Java 11

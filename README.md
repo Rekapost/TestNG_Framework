@@ -270,6 +270,7 @@ Useful for custom test executions like running only regression tests or parallel
 
 ### 14. Run the Test in Jenkins through Jenkins pipeline 
 Jenkinsfile
+
 ### build and push this image to Docker Hub
 # docker build -t reka83/maven-chrome -f Dockerfile-maven-chrome .
 # docker run -d --name maven-chrome reka83/maven-chrome

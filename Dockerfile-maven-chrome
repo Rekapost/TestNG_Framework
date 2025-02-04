@@ -1,0 +1,32 @@
+# Use an official Maven image as a base
+FROM maven:3.8.6-openjdk-11-slim
+
+# Install dependencies for Chrome and ChromeDriver
+RUN apt-get update && apt-get upgrade -y && apt-get install -y \
+    wget \
+    curl \
+    unzip \
+    gnupg2 \
+    lsb-release \
+    ca-certificates \
+    && curl -sSL https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb -o google-chrome.deb \
+    && dpkg -i google-chrome.deb || apt-get -f install -y \
+    && rm google-chrome.deb \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install ChromeDriver
+RUN LATEST=$(wget -qO- https://chromedriver.storage.googleapis.com/LATEST_RELEASE) && \
+    wget https://chromedriver.storage.googleapis.com/$LATEST/chromedriver_linux64.zip -O /chromedriver.zip && \
+    unzip /chromedriver.zip -d /usr/local/bin/ && \
+    rm /chromedriver.zip
+
+# Set environment variables for Chrome
+ENV CHROME_BIN=/usr/bin/google-chrome-stable
+ENV CHROMEDRIVER=/usr/local/bin/chromedriver
+
+# Set work directory (optional)
+WORKDIR /app
+
+# Set entrypoint (optional if you want to run Maven commands directly)
+ENTRYPOINT ["mvn"]
