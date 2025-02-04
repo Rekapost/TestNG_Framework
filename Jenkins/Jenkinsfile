@@ -1,7 +1,16 @@
 pipeline {
 
-  agent any  // Use any available agent (Linux in this case)
+  //agent any  // Use any available agent (Linux in this case)
+agent {
+    docker {
+      image 'maven:3.8.5-jdk-11'  // Official Maven image with Java 11
+    }
+  }
 
+/*tools {
+    maven 'Maven'  // Use the Maven installation configured in Jenkins
+  }
+*/ 
   stages {
 
     stage('Checkout') {
