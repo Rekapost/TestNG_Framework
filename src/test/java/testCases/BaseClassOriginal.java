@@ -95,7 +95,7 @@ public class BaseClassOriginal{
                 chromeOptions.addArguments("--remote-allow-origins=*"); 
                 chromeOptions.addArguments("--disable-extensions"); 
                 chromeOptions.addArguments("--disable-gpu");
-                //chromeOptions.addArguments("--headless");  // Optionally run in headless mode
+                chromeOptions.addArguments("--headless");  // Optionally run in headless mode
                 //WebDriverManager.chromedriver().capabilities(chromeOptions).create();
                 // To check logs for RemoteWebDriver http://localhost:5555/wd/hub :
                 LoggingPreferences logs = new LoggingPreferences();

@@ -6,11 +6,6 @@ pipeline {
         }
     }
 
-    environment {
-        // Set any environment variables required by your tests
-        MAVEN_OPTS = '-Xms512m -Xmx1024m'  // Optional: Adjust heap size for Maven if needed
-    }
-
     stages {
         stage('Checkout') {
             steps {
