@@ -1,11 +1,47 @@
-### To Run the maven project
+# TestNG Framework
+
+## Overview
+This project is a TestNG Framework designed to facilitate automated testing for Java applications. It includes configurations and utilities to help you write and run tests effectively.
+
+## Features
+- Easy integration with Java projects
+- Simple configuration for TestNG
+- Support for HTML reports
+- Docker integration for containerized testing
+
+## Getting Started
+### Prerequisites
+- Java JDK 8 or higher
+- Maven
+- Docker (optional)
+
+### Installation
+1. Clone the repository:
+    ```sh
+    git clone https://github.com/Rekapost/TestNG_Framework.git
+    ```
+2. Navigate to the project directory:
+    ```sh
+    cd TestNG_Framework
+    ```
+3. Install dependencies:
+    ```sh
+    mvn clean install
+    ```
+
+### Running Tests
+To run the tests, use the following command:
+```sh
+mvn test
+
+### 1. To Run the maven project
 Go to the project directory where pom.xml is located
 `mvn clean`
 `mvn compile`
 `mvn test`        /  `mvn install`
 `mvn clean test`  /  `mvn clean install`
 
-### To Run the maven project using chaintest Service
+### 2. To Run the maven project using chaintest Service
 Go to the docker folder and run the following command 
 `docker-compose -f docker-compose-h2.yml up` 
 open url for chaintest report = http://localhost:8081/
@@ -26,32 +62,32 @@ taskkill /PID [PID] /F
  /target/chaintest/Index.html 
  /target/chaintest/Email.html
 
-### Set up a Selenium Grid with a Hub and a Chrome Node using Docker and Selenium. 
+### 3. Set up a Selenium Grid with a Hub and a Chrome Node using Docker and Selenium. 
 ### Prerequisites
 
 Before you begin, ensure that you have the following installed:
 - Docker (for running containers)
 - wget (to download files)
 
-### 1. `wget https://github.com/SeleniumHQ/selenium/releases/download/selenium-4.27.0/selenium-server-4.27.0.jar`
+### 3a. `wget https://github.com/SeleniumHQ/selenium/releases/download/selenium-4.27.0/selenium-server-4.27.0.jar`
 Purpose: This command downloads the Selenium Server JAR file from the official Selenium GitHub releases.
 What it does:
 It fetches the selenium-server-4.27.0.jar file, which contains all the necessary components to run the Selenium Hub. This is required for setting up the Hub on a machine (before you run the Hub).
 
-### 2. `java -jar selenium-server-4.27.0.jar hub`
+### 3b. `java -jar selenium-server-4.27.0.jar hub`
 Purpose: This command starts the Selenium Hub by running the Selenium Server JAR file.
 What it does:
 The -jar flag tells Java to execute the selenium-server-4.27.0.jar file.
 hub is the command that starts the Selenium Grid Hub. This Hub acts as a central point that controls the Selenium Nodes (browsers) and distributes test scripts to them.
 It listens on port 4444 by default, and this is where the test scripts will connect to execute tests on different browsers and platforms.
 
-### 3. `docker pull selenium/standalone-chrome`
+### 3c. `docker pull selenium/standalone-chrome`
 Purpose: This command pulls the Selenium Standalone Chrome Docker image from the Docker Hub.
 What it does:
 docker pull downloads the Docker image selenium/standalone-chrome from the Docker Hub, which contains both a Selenium Node (specifically with Chrome) and a Selenium WebDriver for browser automation.
 This image is used to create a Docker container that will run the Chrome browser in a Selenium Grid as a Node.
 
-### 4. `docker run -d -p 5555:4444 --name selenium-hub1 selenium/standalone-chrome`
+### 3d. `docker run -d -p 5555:4444 --name selenium-hub1 selenium/standalone-chrome`
 Purpose: This command runs a Selenium Node in a Docker container using the previously pulled Selenium Standalone Chrome image.
 What it does:
 -d runs the container in detached mode (in the background).
@@ -59,34 +95,34 @@ What it does:
 --name selenium-hub1 gives a custom name to the container (selenium-hub1), which you can reference later.
 This starts the Selenium Node with Chrome as the browser, which will register itself with the Selenium Hub that is running on port 4444.
 
-### 5. `curl http://localhost:5555/wd/hub/status`
+### 3e. `curl http://localhost:5555/wd/hub/status`
 Purpose: This command checks the status of the Selenium Node to ensure it’s running and properly connected to the Hub.
 What it does:
 curl sends a request to the given URL (http://localhost:5555/wd/hub/status).
 It checks if the Selenium Node running on port 5555 is up and functioning by returning a status JSON response.
 If everything is set up correctly, you should see a response with information about the Node, including its capabilities, browser information, and status.
 
-### run.bat
+### 4. run.bat
 bat file is batch file , executable file
 cd C:\Users\Reka\eclipse-workspace\TestNG_Framework\Reka.TestNG_Framework_DDT
 C:\Users\Reka\eclipse-workspace\TestNG_Framework\Reka.TestNG_Framework_DDT>mvn clean install
 
-### Allure Report
+### 5. Allure Report
 Go to folder where allure-results folder is generated and run the below command
 `allure serve allure-results`
 
-### Extent Report 
+### 6. Extent Report 
 /test-output/Test-Report-********.html
 
-##  Running your TestNG tests inside a Docker container. 
-### 1. Dockerfile Setup
+## 7. Running your TestNG tests inside a Docker container. 
+### 7a. Dockerfile Setup
 Make sure your Dockerfile is set up correctly to build the image with all dependencies for TestNG.
-### Build the image
+### 7b. Build the image
  `docker build -t testng-framework .`
-### To run the container 
+### 7c. To run the container 
 This will start the container and execute the CMD defined in your Dockerfile.
  `docker run --name testng-container testng-framework`
-### To run the container in interactive mode
+### 7d. To run the container in interactive mode
 This gives you a terminal inside the container if you need to debug or run commands manually.
  `docker run -it --name testng-container testng-framework`
 Once inside the container, you can run:
@@ -105,7 +141,7 @@ Once the container is stopped, you can remove it:
 To avoid errors like "container already exists," remove the old container:
 `docker rm testng-container`
 
-### Chromedriver setup
+### 8. Chromedriver setup
 System.setProperty(CHROME_DRIVER, System.getProperty("user.dir")+"//drivers//chromedriver.exe");		
 WebDriverManager.chromedriver().setup(); or WebDriverManager.chromedriver().clearDriverCache().setup();	
 or  WebDriverManager.chromedriver().browserVersion("132.0.6834.159").setup();
@@ -129,9 +165,8 @@ driver = WebDriverManager.chromedriver().create();
 
 ### Automatically downloads and sets up the compatible ChromeDriver
 driver.set(WebDriverManager.chromedriver().capabilities(chromeOptions).create());
-  
 
-## To run classes in parallel
+## 9. To run classes in parallel
 Thread Safety: Ensure ThreadLocal<WebDriver> Is Used
 private static final ThreadLocal<WebDriver> driver = new ThreadLocal<>();
 Since you're running in parallel, ensure you're using ThreadLocal<WebDriver> correctly. use getDriver() for any interactions.
@@ -165,7 +200,7 @@ parallel="methods": Runs test methods in parallel within the same test class.
 The @Optional("chrome") annotation in TestNG allows you to specify a default value for a method parameter in case the parameter is not provided explicitly via the testng.xml file or other test configuration.
 @Optional("chrome") String br
 
-### Cross-browser Testing 
+### 10. Cross-browser Testing 
 TestNG.xml provides the browser name
 <parameter name="browser" value="firefox" />
 BaseClass get the browser name from TestNG.xml and executes 
@@ -197,9 +232,9 @@ Output logs to the terminal if the -verbose flag is used.
 java -Dselenium.verbose=true -jar selenium-server-<version>.jar -role hub -log selenium-hub.log
 
 
-### Lambda Test
+### 11. Lambda Test
 LambdaTest is a cloud-based testing platform that allows you to perform cross-browser testing of your web applications. It provides a wide range of real browsers, operating systems, and devices, so you can ensure your web app works perfectly across different environments without needing to maintain a physical device lab.
-1. Set Up LambdaTest Capabilities: When running Selenium tests on LambdaTest, you’ll configure your desired capabilities to specify the browser, OS, and version.
+11a. Set Up LambdaTest Capabilities: When running Selenium tests on LambdaTest, you’ll configure your desired capabilities to specify the browser, OS, and version.
 DesiredCapabilities capabilities = new DesiredCapabilities();
 capabilities.setCapability("browserName", "Chrome");
 capabilities.setCapability("browserVersion", "latest");
@@ -212,19 +247,19 @@ capabilities.setCapability("LT:Options", new HashMap<String, Object>() {{
 }});
 WebDriver driver = new RemoteWebDriver(new URL("https://hub.lambdatest.com/wd/hub"), capabilities);
 
-2. Run Tests in the Cloud: Your Selenium scripts will now run in the LambdaTest cloud instead of your local browser.
+11b. Run Tests in the Cloud: Your Selenium scripts will now run in the LambdaTest cloud instead of your local browser.
         <parameter name="browser" value="chrome" />
         <parameter name="isLambdaTest" value="true"/>
         <parameter name="isHeadless" value="true"/>
 
-### Run the tests through testng.xml 
+### 12. Run the tests through testng.xml 
 To ensure a clean build and avoid issues from old compiled files.
 To run tests defined in a specific TestNG configuration (testng.xml).
 Useful for custom test executions like running only regression tests or parallel test suites.
 `mvn clean test "-Dsurefire.suiteXmlFiles=testng.xml"cls`
 
 
-### containerized Jenkins environment, you can run Jenkins itself inside Docker.
+### 13. containerized Jenkins environment, you can run Jenkins itself inside Docker.
 `docker run -d --name jenkins \
   -p 8080:8080 -p 50000:50000 \
   -v /var/run/docker.sock:/var/run/docker.sock \
@@ -232,3 +267,13 @@ Useful for custom test executions like running only regression tests or parallel
   jenkins/jenkins:lts`
   #### or 
   `docker run -d --name jenkins -p 8080:8080 -p 50000:50000 -v //var/run/docker.sock:/var/run/docker.sock -v jenkins_home:/var/jenkins_home jenkins/jenkins:lts`
+
+### 14. Run the Test in Jenkins through Jenkins pipeline 
+Jenkinsfile
+### build and push this image to Docker Hub
+# docker build -t reka83/maven-chrome -f Dockerfile-maven-chrome .
+# docker run -d --name maven-chrome reka83/maven-chrome
+# docker push reka83/maven-chrome
+# docker ps -a
+# docker start maven-chrome
+
