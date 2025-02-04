@@ -1,28 +1,36 @@
 pipeline {
     agent {
-    docker {
-        image 'reka83/maven-chrome'
-        args '-v /var/run/docker.sock:/var/run/docker.sock'  // Mount Docker socket
+        docker {
+            image 'reka83/maven-chrome'  // Custom Docker image for Maven and Chrome
+            args '-v /var/run/docker.sock:/var/run/docker.sock'  // Mount Docker socket
+        }
     }
-}
 
     environment {
         DOCKER_REGISTRY = 'https://index.docker.io/v1/'
         DOCKER_USERNAME = 'reka83'
-        // Set DOCKER_PASSWORD as a Jenkins secret (replace 'docker_password' with the correct credentials ID in Jenkins)
-        DOCKER_PASSWORD = credentials('docker-cred') 
+        DOCKER_PASSWORD = credentials('docker-cred')  // Retrieve Docker credentials securely from Jenkins
     }
 
     stages {
+        stage('Set Docker Context') {
+            steps {
+                script {
+                    // Ensure Docker context is set correctly before login
+                    sh 'docker context use default'  // You can also specify another valid context if needed
+                }
+            }
+        }
+
         stage('Login to Docker') {
             steps {
                 script {
-                    // Securely log in to Docker
+                    // Securely log in to Docker using --password-stdin
                     sh 'echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin $DOCKER_REGISTRY'
                 }
             }
         }
-        
+
         stage('Checkout') {
             steps {
                 echo 'Checkout Code'
