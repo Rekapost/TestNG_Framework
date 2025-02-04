@@ -259,6 +259,7 @@ Useful for custom test executions like running only regression tests or parallel
 `mvn clean test "-Dsurefire.suiteXmlFiles=testng.xml"cls`
 
 ### 13. containerized Jenkins environment, you can run Jenkins itself inside Docker.
+To start a Jenkins container
 `docker run -d --name jenkins \
   -p 8080:8080 -p 50000:50000 \
   -v /var/run/docker.sock:/var/run/docker.sock \
@@ -266,6 +267,9 @@ Useful for custom test executions like running only regression tests or parallel
   jenkins/jenkins:lts`
   #### or 
   `docker run -d --name jenkins -p 8080:8080 -p 50000:50000 -v //var/run/docker.sock:/var/run/docker.sock -v jenkins_home:/var/jenkins_home jenkins/jenkins:lts`
+  
+### To retrieve passsword
+  docker exec -it jenkinsdocker cat /var/jenkins_home/secrets/initialAdminPassword
 
 ### 14. Run the Test in Jenkins through Jenkins pipeline 
 Jenkinsfile
