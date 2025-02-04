@@ -34,6 +34,7 @@ To run the tests, use the following command:
 ```sh
 mvn test
 
+
 ### 1. To Run the maven project
 Go to the project directory where pom.xml is located
 `mvn clean`
@@ -229,8 +230,7 @@ Output logs to the terminal if the -verbose flag is used.
 -log selenium-node.log: Logs will be saved to this file.
 
 ### Selenium Grid Hub logs
-java -Dselenium.verbose=true -jar selenium-server-<version>.jar -role hub -log selenium-hub.log
-
+`java -Dselenium.verbose=true -jar selenium-server-<version>.jar -role hub -log selenium-hub.log`
 
 ### 11. Lambda Test
 LambdaTest is a cloud-based testing platform that allows you to perform cross-browser testing of your web applications. It provides a wide range of real browsers, operating systems, and devices, so you can ensure your web app works perfectly across different environments without needing to maintain a physical device lab.
@@ -258,7 +258,6 @@ To run tests defined in a specific TestNG configuration (testng.xml).
 Useful for custom test executions like running only regression tests or parallel test suites.
 `mvn clean test "-Dsurefire.suiteXmlFiles=testng.xml"cls`
 
-
 ### 13. containerized Jenkins environment, you can run Jenkins itself inside Docker.
 `docker run -d --name jenkins \
   -p 8080:8080 -p 50000:50000 \
@@ -271,10 +270,10 @@ Useful for custom test executions like running only regression tests or parallel
 ### 14. Run the Test in Jenkins through Jenkins pipeline 
 Jenkinsfile
 
-### build and push this image to Docker Hub
-# docker build -t reka83/maven-chrome -f Dockerfile-maven-chrome .
-# docker run -d --name maven-chrome reka83/maven-chrome
-# docker push reka83/maven-chrome
-# docker ps -a
-# docker start maven-chrome
+### Creating image for maven-chrome Build and push this image to Docker Hub
+ `docker build -t reka83/maven-chrome -f Dockerfile-maven-chrome .`
+ `docker run -d --name maven-chrome reka83/maven-chrome`
+ `docker push reka83/maven-chrome`
+ `docker ps -a`
+ `docker start maven-chrome`
 
