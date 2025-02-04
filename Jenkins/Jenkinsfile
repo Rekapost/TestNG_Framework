@@ -14,7 +14,7 @@ pipeline {
             steps {
                 echo 'Running Maven tests'
                 // Run your Maven tests using the testng.xml configuration file
-                sh 'mvn clean test -Dsurefire.suiteXmlFiles=testng.xml'  // Adjust if you have a specific testng.xml or configuration
+                bat 'mvn clean test -Dsurefire.suiteXmlFiles=testng.xml'  // Adjust if you have a specific testng.xml or configuration
             }
         }
 
