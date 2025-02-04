@@ -10,7 +10,7 @@ pipeline {
         DOCKER_REGISTRY = 'https://index.docker.io/v1/'
         DOCKER_USERNAME = 'reka83'
         // Set DOCKER_PASSWORD as a Jenkins secret (replace 'docker_password' with the correct credentials ID in Jenkins)
-        DOCKER_PASSWORD = credentials('docker_password') 
+        DOCKER_PASSWORD = credentials('docker-cred') 
     }
 
     stages {
