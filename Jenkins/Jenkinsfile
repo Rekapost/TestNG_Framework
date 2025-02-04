@@ -1,10 +1,5 @@
 pipeline {
-    agent {
-        docker {
-            image 'reka83/maven-chrome'  // Use the custom image with Maven and ChromeDriver
-            args '--user root -v /var/run/docker.sock:/var/run/docker.sock'  // Mount Docker socket if needed (optional)
-        }
-    }
+    agent any 
 
     stages {
         stage('Checkout') {
