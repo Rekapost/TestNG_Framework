@@ -33,7 +33,7 @@ This project is a TestNG Framework designed to facilitate automated testing for 
 To run the tests, use the following command:
 ```sh
 mvn test
-
+```
 
 ## 1. Running the Maven Project
 Navigate to the project directory where `pom.xml` is located and run:
@@ -183,6 +183,7 @@ If You Need to Rerun Without Rebuilding
 To avoid errors like "container already exists," remove the old container:
 ```sh
 docker rm testng-container
+```
 
 ## 8. ChromeDriver Setup
 ```java
