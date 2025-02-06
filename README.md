@@ -213,11 +213,11 @@ chromeOptions.addArguments("--remote-debugging-port=9222");  // Enable debugging
 driver =new ChromeDriver(chromeOptions);	or  driver=new ChromeDriver();  // instantiate chromedriver	
 ```
 
-## To initialize your ChromeDriver without manually handling setup or system properties
+### To initialize your ChromeDriver without manually handling setup or system properties
 ```java
 driver = WebDriverManager.chromedriver().create();
 ```
-## Automatically downloads and sets up the compatible ChromeDriver
+### Automatically downloads and sets up the compatible ChromeDriver
 ```java
 driver.set(WebDriverManager.chromedriver().capabilities(chromeOptions).create());
 ```
@@ -238,7 +238,7 @@ TestNG XML:
     </classes>
 </suite>
 ```
-## To run classes and methods in parallel
+### To run classes and methods in parallel
 parallel="both": Runs both test methods and test classes in parallel.
 class 1 with 1 method and class 2 with 1 dataprovider method that runs 4 times 
 <suite name="TestSuite" thread-count="4" parallel="both">
@@ -255,7 +255,7 @@ parallel="methods": Runs test methods in parallel within the same test class.
 <suite name="ParallelTestSuite" parallel="methods" thread-count="4">
 <class name="LoginTest"/>
 
-## Optional Parameter: It makes the parameter optional in the sense that the test can still run if the parameter isn't provided. You can configure it to fall back to a default browser like Chrome or Firefox, depending on what you need.
+### Optional Parameter: It makes the parameter optional in the sense that the test can still run if the parameter isn't provided. You can configure it to fall back to a default browser like Chrome or Firefox, depending on what you need.
 The @Optional("chrome") annotation in TestNG allows you to specify a default value for a method parameter in case the parameter is not provided explicitly via the testng.xml file or other test configuration.
 @Optional("chrome") String br
 
@@ -278,19 +278,19 @@ driver = new RemoteWebDriver(new URL("http://localhost:6666/wd/hub"), chromeOpti
 To instantiate a RemoteWebDriver object that communicates with a remote Selenium WebDriver server (such as a Selenium Grid, BrowserStack, Sauce Labs, or a local Selenium server running on localhost). The URL points to the Selenium Hub (which can manage multiple WebDriver instances) and the chromeOptions are passed to configure Chrome's settings.
 Parallel Execution: You can run tests on multiple machines or environments simultaneously.
 Cross-Browser Testing: You can test your application on various browsers and OS combinations, even if those browsers are not installed on your local machine.
-## Hub Console:
+### Hub Console:
 URL: http://localhost:5555/grid/console
 Purpose: This page will show the current status of your Selenium Grid. It will display the connected nodes, their status (idle or busy), and allow you to see the grid configuration. You won't see individual test logs here, but it gives a general view of the grid.
-## WebDriver Endpoint:
+### WebDriver Endpoint:
 URL: http://localhost:5555/wd/hub
 Purpose: This URL serves as the WebDriver endpoint that allows your tests to communicate with the Selenium Grid. If the server is running, you may see a JSON response showing the status of the WebDriver, but it won't show detailed logs or outputs.
 When starting a Selenium Node, you can enable logging by using the -log option. This will direct the logs to a specified file, or you can simply view them in the terminal.
 java -Dselenium.verbose=true -jar selenium-server-<version>.jar -role node -hub http://localhost:5555/grid/register -log selenium-node.log
-## This will:
+### This will:
 Start the Selenium Node and register it with the Hub (localhost:5555).
 Write logs to a file named selenium-node.log in the current directory.
 Output logs to the terminal if the -verbose flag is used.
-## Key parts of the command:
+### Key parts of the command:
 -Dselenium.verbose=true: This will provide verbose output to show detailed logs.
 -log selenium-node.log: Logs will be saved to this file.
 
