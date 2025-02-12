@@ -29,6 +29,23 @@ This project is a TestNG Framework designed to facilitate automated testing for 
     mvn clean install
     ```
 
+## *************   Running the Maven Project **************
+- Locally
+- Using ChainTest Service
+- In Selenium Grid
+- With Parallel Testing
+- For Cross-Browser Testing
+- Using Docker Container
+- Through Jenkins File
+- Via Docker File
+- In the Cloud using Lambda Service
+- With Static Code Analysis
+- For Performance Testing (Stress Test)
+- Generating Allure Report
+- Generating Extent Report
+- Generating ChainTest Report
+
+
 ### Running Tests
 To run the tests, use the following command:
 ```sh
@@ -464,3 +481,4 @@ You will see your project's code quality, security vulnerabilities, and test cov
 🚀 SonarQube is now integrated with your Maven project!
 
 ![alt text](image-2.png)
+![alt text](image-3.png)
