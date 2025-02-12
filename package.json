@@ -1,0 +1,11 @@
+{
+  "name": "testng-framework",
+  "version": "1.0.0",
+  "description": "This project is a TestNG Framework designed to facilitate automated testing for Java applications. It includes configurations and utilities to help you write and run tests effectively.",
+  "main": "stress-test.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}

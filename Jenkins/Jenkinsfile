@@ -24,6 +24,20 @@ pipeline {
                 // Optional: Run any cleanup or post-test steps if needed
             }
         }
+
+        stage('Static Code Analysis') {
+            environment {
+            SONAR_URL = "http://localhost:9000/"
+            }
+      steps {
+        withCredentials([string(credentialsId: 'sonarqube', variable: 'SONAR_AUTH_TOKEN')]) {
+        // sh 'cd ${WORKSPACE}/jenkins/spring-boot-app && mvn sonar:sonar -Dsonar.login=$SONAR_AUTH_TOKEN -Dsonar.host.url=${SONAR_URL}'
+        //sh 'cd jenkins/spring-boot-app && mvn sonar:sonar -Dsonar.login=$SONAR_AUTH_TOKEN -Dsonar.host.url=${SONAR_URL}'
+        bat 'mvn clean verify sonar:sonar -Dsonar.host.url=${SONAR_URL} -Dsonar.login=$SONAR_AUTH_TOKEN'
+        }
+      }
+    }
+
     }
 
     post {

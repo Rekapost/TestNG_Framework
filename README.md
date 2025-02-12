@@ -373,3 +373,94 @@ To restart the container:
 ```sh
 docker start maven-chrome
 ```
+
+# Performance Testing with k6
+
+## Installation  
+
+You can install **k6** using the following methods:
+
+### Using Winget
+```sh
+winget install k6
+winget install --id k6.k6 -e
+```
+
+### Using Docker
+```sh
+docker pull grafana/k6
+```
+---
+
+## Running k6  
+
+Follow these steps to run a performance test:
+1.	Run a test.
+2.	Add virtual users.
+3.	Increase the test duration.
+4.	Ramp the number of requests up and down as the test runs.
+```sh
+npm init
+```
+Package.json gets created 
+
+### 1. Run a Basic Test
+```sh
+k6 run stress-test.js
+```
+
+### 2. Run a Test with Virtual Users (VUs)  
+To simulate 10 virtual users for 30 seconds:
+```sh
+k6 run --vus 10 --duration 30s script.js
+```
+
+## Static Code Analysis using Sonar Qube
+winget install unzip
+### Step 1: Install Prerequisites
+Ensure you have the following installed:
+✅ Java 11 or later (JDK)
+✅ Maven (Download from Apache Maven)
+✅ SonarQube Community Edition
+
+### Step 2: Download and Extract SonarQube
+Download SonarQube from: 🔗 SonarQube Downloads
+Extract the ZIP file to C:\SonarQube
+Rename the extracted folder to sonarqube
+### Step 3: Configure SonarQube
+Open the C:\SonarQube\sonarqube\conf\sonar.properties file in Notepad.
+Modify the following lines to use localhost:
+- sonar.web.host=127.0.0.1
+- sonar.web.port=9000
+- sonar.search.javaAdditionalOpts=-Dnode.store.allow_mmap=false
+Save and close the file.
+### Step 4: Start SonarQube
+#### Step 1:Open Command Prompt (Run as Administrator)
+Navigate to the SonarQube bin folder:
+``` sh
+cd C:\SonarQube\sonarqube\bin\windows-x86-64
+```
+Start SonarQube:
+```sh
+StartSonar.bat
+```
+Wait for SonarQube to start and open http://localhost:9000 in your browser.
+Default Username: admin
+Default Password: admin
+#### Step 1: Add the SonarQube Plugin to Your pom.xml
+#### Step 2: Generate a Sonar Token
+Go to http://localhost:9000
+Click on Your Profile (Top Right) → My Account → Security
+Generate a new token (e.g., sonar-token)
+#### Step 3: Run SonarQube Analysis
+Open Command Prompt in your Maven project folder and run:
+
+```sh
+mvn clean verify sonar:sonar -Dsonar.host.url=http://localhost:9000 -Dsonar.login=<YOUR_TOKEN>
+```
+3️⃣ View Analysis in SonarQube
+Open http://localhost:9000 in your browser.
+You will see your project's code quality, security vulnerabilities, and test coverage.
+🚀 SonarQube is now integrated with your Maven project!
+
+![alt text](image-2.png)
