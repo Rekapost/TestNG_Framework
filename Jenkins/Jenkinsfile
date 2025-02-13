@@ -18,13 +18,6 @@ pipeline {
             }
         }
 
-        stage('Post-test Cleanup') {
-            steps {
-                echo 'Cleaning up after tests'
-                // Optional: Run any cleanup or post-test steps if needed
-            }
-        }
-
 /*        stage('Static Code Analysis') {
            environment {
                 SONAR_URL = "http://localhost:9000"
@@ -37,13 +30,21 @@ pipeline {
                 }
             }
 */
+                stage('Check Docker Version') {
+                    steps {
+                        script {
+                            sh 'docker --version'
+                        }
+                    }
+                }
             stage('Run Stress Test') {
             steps {
                 script {
                     // Run the k6 load test using Docker or installed k6
                     //k6 run --out json=stress-results.json stress-test.js
-                    sh '''                              
-                        docker run --rm -v $(pwd):/mnt loadimpact/k6 run --out json=/mnt/stress-results.json /mnt/stress-test.js
+                    //docker run --rm -v $(pwd):/mnt loadimpact/k6 run --out json=/mnt/stress-results.json /mnt/stress-test.js
+                    sh '''                                                     
+                        /usr/bin/docker run --rm -v $(pwd):/mnt loadimpact/k6 run --out json=/mnt/stress-results.json /mnt/stress-test.js 
                     '''
                 }
             }
@@ -57,6 +58,12 @@ pipeline {
                         docker run --rm -v $(pwd):/mnt loadimpact/k6 run --out json=/mnt/load-results.json /mnt/load-test.js
                     '''
                 }
+            }
+        }
+                stage('Post-test Cleanup') {
+            steps {
+                echo 'Cleaning up after tests'
+                // Optional: Run any cleanup or post-test steps if needed
             }
         }
 
