@@ -39,8 +39,8 @@ This project is a TestNG Framework designed to facilitate automated testing for 
 - Through Jenkins File
 - Via Docker File
 - In the Cloud using Lambda Service
-- With Static Code Analysis
-- For Performance Testing (Stress Test)
+- With Static Code Analysis SonarQube
+- For Performance Testing Grafana K6 (Stress Test and Load Test)
 - Generating Allure Report
 - Generating Extent Report
 - Generating ChainTest Report
