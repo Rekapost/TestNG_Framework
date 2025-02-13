@@ -409,7 +409,7 @@ docker pull grafana/k6
 ```
 ---
 
-## Running k6  
+## Running Grafana-k6  
 
 Follow these steps to run a performance test:
 1.	Run a test.
@@ -424,12 +424,18 @@ Package.json gets created
 ### 1. Run a Basic Test
 ```sh
 k6 run stress-test.js
+k6 run load-test.js
 ```
 
 ### 2. Run a Test with Virtual Users (VUs)  
 To simulate 10 virtual users for 30 seconds:
 ```sh
 k6 run --vus 10 --duration 30s script.js
+```
+To see output in string format 
+```sh
+k6 run --out json=results.json stress-test.js
+jq . results.json
 ```
 
 ## Static Code Analysis using Sonar Qube

@@ -14,4 +14,8 @@ export const options = {
 export default function(){
     http.get('https://naveenautomationlabs.com/opencart/index.php?route=account/login');
     sleep(1); // pause for 1 second between requests
+
+   // k6 run --out json=results.json stress-test.js 
+   //jq . results.json
 }
+

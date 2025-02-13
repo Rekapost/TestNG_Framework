@@ -33,10 +33,33 @@ pipeline {
                     withCredentials([string(credentialsId: 'sonarqube', variable: 'SONAR_AUTH_TOKEN')]) {
                         echo "SonarQube URL: ${SONAR_URL}"
                         bat "mvn clean verify sonar:sonar -Dsonar.host.url=${SONAR_URL} -Dsonar.login=$SONAR_AUTH_TOKEN"
-
                     }
                 }
             }
+
+            stage('Run Stress Test') {
+            steps {
+                script {
+                    // Run the k6 load test using Docker or installed k6
+                    sh '''                        
+                        k6 run --out json=stress-results.json stress-test.js
+                    '''
+                }
+            }
+        }
+
+        stage('Run Load Test') {
+            steps {
+                script {
+                    // Run the k6 load test using Docker or installed k6
+                    sh '''
+                        k6 run --out json=load-results.json load-test.js
+                    '''
+                }
+            }
+        }
+
+
     }
 
     post {
