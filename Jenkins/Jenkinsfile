@@ -43,8 +43,10 @@ pipeline {
                     // Run the k6 load test using Docker or installed k6
                     //k6 run --out json=stress-results.json stress-test.js
                     //docker run --rm -v $(pwd):/mnt loadimpact/k6 run --out json=/mnt/stress-results.json /mnt/stress-test.js                                          
-                     sh '/usr/bin/docker run --rm -v $(pwd):/mnt loadimpact/k6 run --out json=/mnt/stress-results.json /mnt/stress-test.js' 
-                    
+                    // sh '/usr/bin/docker run --rm -v $(pwd):/mnt loadimpact/k6 run --out json=/mnt/stress-results.json /mnt/stress-test.js' 
+                    bat '''
+                        docker run --rm -v %cd%:/mnt loadimpact/k6 run --out json=/mnt/load-results.json /mnt/load-test.js
+                    '''
                 }
             }
         }
@@ -53,8 +55,10 @@ pipeline {
             steps {
                 script {
                     // Run the k6 load test using Docker or installed k6
-                    sh 'docker run --rm -v $(pwd):/mnt loadimpact/k6 run --out json=/mnt/load-results.json /mnt/load-test.js'
-                    
+                    //sh 'docker run --rm -v $(pwd):/mnt loadimpact/k6 run --out json=/mnt/load-results.json /mnt/load-test.js'
+                   bat '''
+                        docker run --rm -v %cd%:/mnt loadimpact/k6 run --out json=/mnt/load-results.json /mnt/load-test.js
+                      ''' 
                 }
             }
         }
