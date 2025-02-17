@@ -203,12 +203,17 @@ Navigate to the folder containing `allure-results` and run:
 ```sh
 allure serve allure-results
 ```
+![image](https://github.com/user-attachments/assets/2c57d392-461e-4625-b02e-ed716b8daefd)
+![image](https://github.com/user-attachments/assets/0ce4841c-6c90-4223-a0c4-ab59ee561286)
+
 
 ## 6. Extent Report Location
 - **Extent Report:** Available in the `reports` folder after execution.
 ```sh
 /test-output/Test-Report-********.html
 ```
+![image](https://github.com/user-attachments/assets/a823b09d-d617-4acf-bb86-771c87f2f275)
+
 
 ## 7. Running your TestNG tests inside a Docker container.
 
@@ -220,6 +225,7 @@ Make sure your Dockerfile is set up correctly to build the image with all depend
 ```sh
 docker build -t testng-framework .
 ```
+![image](https://github.com/user-attachments/assets/9e5a541b-c3e6-4b36-a10a-74405b2c0d5b)
 
 ### 7c. Run the Container
 This will start the container and execute the CMD defined in your Dockerfile.
@@ -378,6 +384,7 @@ capabilities.setCapability("LT:Options", new HashMap<String, Object>() {{
 }});
 WebDriver driver = new RemoteWebDriver(new URL("https://hub.lambdatest.com/wd/hub"), capabilities);
 ```
+![image](https://github.com/user-attachments/assets/ba3b4753-8993-4fc0-8129-6f43ffbac40f)
 
 11b. Run Tests in the Cloud: Your Selenium scripts will now run in the LambdaTest cloud instead of your local browser.
         <parameter name="browser" value="chrome" />
