@@ -146,6 +146,12 @@ If everything is set up correctly, you should see a response with information ab
 curl http://localhost:5555/wd/hub/status
 ```
 
+#### 3f. Run Your Maven Test
+```sh
+mvn clean test -Dselenium.grid.url=http://localhost:4444/wd/hub
+```
+This runs your tests using Maven and specifies the URL of your Selenium Grid (Hub) as a system property (selenium.grid.url). It connects to the Hub via http://localhost:4444/wd/hub to request WebDriver sessions.
+
 ## 4. Running TestNG Tests with Maven
 Create a batch file (`run.bat`):
 ```sh
@@ -332,6 +338,7 @@ capabilities.setCapability("LT:Options", new HashMap<String, Object>() {{
 }});
 WebDriver driver = new RemoteWebDriver(new URL("https://hub.lambdatest.com/wd/hub"), capabilities);
 ```
+![alt text](image-5.png)
 
 11b. Run Tests in the Cloud: Your Selenium scripts will now run in the LambdaTest cloud instead of your local browser.
         <parameter name="browser" value="chrome" />
@@ -366,6 +373,7 @@ docker run -d --name jenkins -p 8080:8080 -p 50000:50000 -v /var/run/docker.sock
 ```sh
 docker exec -it jenkins cat /var/jenkins_home/secrets/initialAdminPassword
 ```
+![alt text](image-4.png)
 
 ## 14. Running Tests in Jenkins Pipeline
 Create `Jenkinsfile` for pipeline execution.

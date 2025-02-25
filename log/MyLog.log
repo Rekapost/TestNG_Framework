@@ -119,3 +119,7 @@
 2025-02-12 13:51:48 INFO  TestCase:36 - entering password:
 2025-02-12 13:51:49 INFO  TestCase:47 - loging out of nop commerce
 2025-02-12 13:51:49 INFO  TestCase:70 - back to home page :
+2025-02-19 16:27:12 INFO  TestCase:34 - entering username:
+2025-02-19 16:27:12 INFO  TestCase:36 - entering password:
+2025-02-19 16:27:13 INFO  TestCase:47 - loging out of nop commerce
+2025-02-19 16:27:13 INFO  TestCase:70 - back to home page :

@@ -26,7 +26,6 @@ import org.testng.ITestResult;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
-import org.testng.annotations.Listeners;
 import org.testng.annotations.Parameters;
 
 import com.aventstack.chaintest.service.ChainPluginService;
@@ -36,7 +35,7 @@ import utilities.ConfigReader;
 import utilities.Loggerload;
 import utilities.chainTestListener;
 
-@Listeners(chainTestListener.class)
+//@Listeners(chainTestListener.class)
 public class BaseClassOriginal{ 
     //public static WebDriver driver;
     private static final ThreadLocal<WebDriver> driver = new ThreadLocal<>();
@@ -97,13 +96,12 @@ public class BaseClassOriginal{
                 chromeOptions.addArguments("--disable-gpu");
                 chromeOptions.addArguments("--headless");  // Optionally run in headless mode
                 //WebDriverManager.chromedriver().capabilities(chromeOptions).create();
-                // To check logs for RemoteWebDriver http://localhost:5555/wd/hub :
                 LoggingPreferences logs = new LoggingPreferences();
                 logs.enable(LogType.BROWSER, Level.ALL);
-                chromeOptions.setCapability(CapabilityType.LOGGING_PREFS, logs);
-            
+                chromeOptions.setCapability(CapabilityType.LOGGING_PREFS, logs);           
             }
             driver.set(new ChromeDriver(chromeOptions));
+            // To check logs for RemoteWebDriver http://localhost:5555/wd/hub :
             //driver.set(new RemoteWebDriver(new URL("http://localhost:5555/wd/hub"),chromeOptions));
             getDriver().manage().deleteAllCookies();
         }
