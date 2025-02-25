@@ -78,7 +78,7 @@ public class BaseClassOriginal{
             // Check if running inside Docker (or any Linux-based environment)
             if (System.getProperty("os.name").toLowerCase().contains("linux")) {
                 System.setProperty("webdriver.chrome.driver", "/usr/local/bin/chromedriver");
-                chromeOptions.addArguments( "--disable-gpu", "--no-sandbox", "--disable-dev-shm-usage", "--remote-allow-origins=*");
+                chromeOptions.addArguments( "--headless","--disable-gpu", "--no-sandbox", "--disable-dev-shm-usage", "--remote-allow-origins=*");
             } else {
                 // Only set WebDriverManager if you want it to automatically manage ChromeDriver
                 // WebDriverManager.chromedriver().driverVersion("latest").setup(); // Ensure it's the latest version
