@@ -569,7 +569,7 @@ Alowing the automation of workflows triggered by events such as push or pull req
 ### **🔹 Explanation**
 1. **GitHub Actions Badge**:
    ```md
-   ![CI/CD Pipeline](https://github.com/Rekapost/TestNG_Framework/actions/workflows/ci-cd.yml/badge.svg)
+   ![CI/CD Pipeline](https://github.com/Rekapost/TestNG_Framework/actions/workflows/ci-cd-pipeline.yml/badge.svg)
    ![image](https://github.com/user-attachments/assets/fa8ab514-0412-4657-a86d-9eedee8ddb00)
    ![image](https://github.com/user-attachments/assets/17d0e972-87e9-4b97-bae7-9043e11a70f4)
    ![image](https://github.com/user-attachments/assets/996c858c-13a8-402d-932d-8e788c72b476)
