@@ -10,6 +10,7 @@ This is a robust **TestNG Framework** designed for end-to-end automation testing
 - **Docker** - Containerization
 - **AWS Lambda** - Cloud Execution
 - **Jenkins** - CI/CD Pipeline
+- **GithubActions** - CI/CD Pipeline 
 - **Maven** - Build Automation
 - **SonarQube** - Static Code Analysis
 - **Grafana K6** - Performance Testing (Load & Stress Testing)
@@ -43,6 +44,7 @@ TestNG_Framework/
 - **Cross-Browser Testing**
 - **Run in Docker Container**
 - **Execute via Jenkins Pipeline**
+- **Execute via GithubActions**
 - **Dockerfile** for environment setup
 - **Cloud Execution using AWS Lambda**
 - **Static Code Analysis with SonarQube**
@@ -555,6 +557,22 @@ You will see your project's code quality, security vulnerabilities, and test cov
 ![alt text](image-2.png)
 ![alt text](image-3.png)
 
+## 18 GithubActions
+Alowing the automation of workflows triggered by events such as push or pull requests.
+### How GitHub Actions Works Internally
+1️⃣ Trigger Events (e.g., push, pull_request, schedule).
+2️⃣ YAML Workflow Execution (inside .github/workflows/).
+3️⃣ Runs on a Hosted Runner (Ubuntu, macOS, or Windows).
+4️⃣ Executes Jobs in Parallel or Sequentially (using Docker containers or VMs).
+5️⃣ Generates Logs, Artifacts, & Reports (TestNG reports, build logs, etc.).
+6️⃣ Integrates with GitHub API & Third-Party Services (AWS, Slack, SonarQube).
+### **🔹 Explanation**
+1. **GitHub Actions Badge**:
+   ```md
+   ![CI/CD Pipeline](https://github.com/Rekapost/TestNG_Framework/actions/workflows/ci-cd.yml/badge.svg)
+   ![image](https://github.com/user-attachments/assets/fa8ab514-0412-4657-a86d-9eedee8ddb00)
+   ![image](https://github.com/user-attachments/assets/17d0e972-87e9-4b97-bae7-9043e11a70f4)
+   ![image](https://github.com/user-attachments/assets/996c858c-13a8-402d-932d-8e788c72b476)
 
 ## 🧑‍💻 Author
 **Rekapost**  
