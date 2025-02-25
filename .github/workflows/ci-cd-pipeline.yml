@@ -49,3 +49,22 @@ jobs:
 
       - name: Run TestNG tests
         run: mvn test
+
+      - name: Upload Report
+        uses: actions/upload-artifact@v3
+        with:
+          name: Test Reports
+          path: reports/
+
+      - name: Upload Extent Report
+        uses: actions/upload-artifact@v3
+        with:
+          name: Extent Report
+          path: reports/extent-report.html
+
+      - name: Upload ChainTest Report
+        uses: actions/upload-artifact@v3
+        with:
+          name: ChainTest Report
+          path: reports/chaintest-report.html
+
