@@ -1,7 +1,56 @@
-# TestNG Framework
+# TestNG Framework with Advanced Integrations
 
-## Overview
-This project is a TestNG Framework designed to facilitate automated testing for Java applications. It includes configurations and utilities to help you write and run tests effectively.
+## 🚀 Project Overview
+This is a robust **TestNG Framework** designed for end-to-end automation testing with advanced integrations for parallel testing, cross-browser testing, Docker, Selenium Grid, CI/CD pipelines, performance testing, and detailed reporting.
+
+## 🛠️ Technologies & Tools Used
+- **TestNG** - Test Framework
+- **Selenium WebDriver** - Browser Automation
+- **Selenium Grid** - Distributed Parallel Testing
+- **Docker** - Containerization
+- **AWS Lambda** - Cloud Execution
+- **Jenkins** - CI/CD Pipeline
+- **Maven** - Build Automation
+- **SonarQube** - Static Code Analysis
+- **Grafana K6** - Performance Testing (Load & Stress Testing)
+- **Allure Report** - Test Execution Report
+- **Extent Report** - HTML Test Report
+- **ChainTest Report** - ChainTest Execution Report
+
+## 📂 Folder Structure
+```
+TestNG_Framework/
+├── src/
+│   └── test/
+│       └── java/
+│       └── resources/
+├── reports/
+├── docker/
+├── jenkins/
+├── k6/
+├── sonar/
+├── pom.xml
+├── Dockerfile
+├── Jenkinsfile
+└── README.md
+```
+
+## 📝 Key Features
+- **Run Locally using Maven**
+- **Run with ChainTest Service**
+- **Execute in Selenium Grid** for distributed testing
+- **Parallel Testing** for reduced execution time
+- **Cross-Browser Testing**
+- **Run in Docker Container**
+- **Execute via Jenkins Pipeline**
+- **Dockerfile** for environment setup
+- **Cloud Execution using AWS Lambda**
+- **Static Code Analysis with SonarQube**
+- **Performance Testing (Load & Stress)** using K6 + Grafana
+- **Generate Reports:**
+  - **Allure Report**
+  - **Extent Report**
+  - **ChainTest Report**
 
 ## Features
 - Easy integration with Java projects
@@ -28,31 +77,15 @@ This project is a TestNG Framework designed to facilitate automated testing for 
     ```sh
     mvn clean install
     ```
+## 🏃 How to Run
 
-## *************   Running the Maven Project **************
-- Locally
-- Using ChainTest Service
-- In Selenium Grid
-- With Parallel Testing
-- For Cross-Browser Testing
-- Using Docker Container
-- Through Jenkins File
-- Via Docker File
-- In the Cloud using Lambda Service
-- With Static Code Analysis
-- For Performance Testing (Stress Test)
-- Generating Allure Report
-- Generating Extent Report
-- Generating ChainTest Report
-
-
-### Running Tests
+## 1. Running Tests
 To run the tests, use the following command:
 ```sh
-mvn test
+mvn clean test
 ```
 
-## 1. Running the Maven Project
+### Running the Maven Project
 Navigate to the project directory where `pom.xml` is located and run:
 ```sh
 mvn clean
@@ -86,11 +119,18 @@ Before starting your service, ensure the port (e.g., `8081`) is free and not bei
    ```
 
 ### Reports are saved at:
+- **ChainTest Report:** Generated after test execution.
 - `/target/chaintest/Index.html`
 - `/target/chaintest/Email.html`
 
 ## 3. Setting Up Selenium Grid with Docker
 Set up a Selenium Grid with a Hub and a Chrome Node using Docker and Selenium. 
+- Start Selenium Grid Hub and Nodes
+- Update `testng.xml` with Grid URL
+- Execute the tests:
+```
+mvn clean test -Dselenium.grid.url=http://localhost:4444/wd/hub
+```
 
 ### Prerequisites
 Ensure you have:
@@ -158,17 +198,28 @@ Create a batch file (`run.bat`):
 cd C:\Users\Reka\eclipse-workspace\TestNG_Framework\Reka.TestNG_Framework_DDT
 mvn clean install
 ```
+## 📊 Reports
 
 ## 5. Generating Allure Report
+- **Allure Report:**
+```
+mvn allure:serve
+```
 Navigate to the folder containing `allure-results` and run:
 ```sh
 allure serve allure-results
 ```
+![image](https://github.com/user-attachments/assets/2c57d392-461e-4625-b02e-ed716b8daefd)
+![image](https://github.com/user-attachments/assets/0ce4841c-6c90-4223-a0c4-ab59ee561286)
+
 
 ## 6. Extent Report Location
+- **Extent Report:** Available in the `reports` folder after execution.
 ```sh
 /test-output/Test-Report-********.html
 ```
+![image](https://github.com/user-attachments/assets/a823b09d-d617-4acf-bb86-771c87f2f275)
+
 
 ## 7. Running your TestNG tests inside a Docker container.
 
@@ -180,6 +231,7 @@ Make sure your Dockerfile is set up correctly to build the image with all depend
 ```sh
 docker build -t testng-framework .
 ```
+![image](https://github.com/user-attachments/assets/9e5a541b-c3e6-4b36-a10a-74405b2c0d5b)
 
 ### 7c. Run the Container
 This will start the container and execute the CMD defined in your Dockerfile.
@@ -317,7 +369,7 @@ Output logs to the terminal if the -verbose flag is used.
 -Dselenium.verbose=true: This will provide verbose output to show detailed logs.
 -log selenium-node.log: Logs will be saved to this file.
 
-## Selenium Grid Hub logs
+### Selenium Grid Hub logs
 ```sh
 java -Dselenium.verbose=true -jar selenium-server-<version>.jar -role hub -log selenium-hub.log`
 ```
@@ -338,7 +390,11 @@ capabilities.setCapability("LT:Options", new HashMap<String, Object>() {{
 }});
 WebDriver driver = new RemoteWebDriver(new URL("https://hub.lambdatest.com/wd/hub"), capabilities);
 ```
+
 ![alt text](image-5.png)
+
+![image](https://github.com/user-attachments/assets/ba3b4753-8993-4fc0-8129-6f43ffbac40f)
+
 
 11b. Run Tests in the Cloud: Your Selenium scripts will now run in the LambdaTest cloud instead of your local browser.
         <parameter name="browser" value="chrome" />
@@ -376,8 +432,8 @@ docker exec -it jenkins cat /var/jenkins_home/secrets/initialAdminPassword
 ![alt text](image-4.png)
 
 ## 14. Running Tests in Jenkins Pipeline
-Create `Jenkinsfile` for pipeline execution.
-
+- Configure **Jenkinsfile** in your Jenkins setup.
+- 
 ## 15. Creating and Pushing Docker Image
 ```sh
 docker build -t reka83/maven-chrome -f Dockerfile-maven-chrome .
@@ -399,7 +455,7 @@ To restart the container:
 docker start maven-chrome
 ```
 
-# Performance Testing with k6
+## 16. Performance Testing with k6
 
 ## Installation  
 
@@ -418,7 +474,9 @@ docker pull grafana/k6
 ---
 
 ## Running Grafana-k6  
-
+## 📈 Performance Testing
+- **K6 Load/Stress Test:** Scripts in `k6` folder.
+- **Grafana:** Monitor results visually.
 Follow these steps to run a performance test:
 1.	Run a test.
 2.	Add virtual users.
@@ -446,7 +504,7 @@ k6 run --out json=results.json stress-test.js
 jq . results.json
 ```
 
-## Static Code Analysis using Sonar Qube
+## 17.  Static Code Analysis using Sonar Qube
 winget install unzip
 ### Step 1: Install Prerequisites
 Ensure you have the following installed:
@@ -496,3 +554,8 @@ You will see your project's code quality, security vulnerabilities, and test cov
 
 ![alt text](image-2.png)
 ![alt text](image-3.png)
+
+
+## 🧑‍💻 Author
+**Rekapost**  
+GitHub: [https://github.com/Rekapost/TestNG_Framework](https://github.com/Rekapost/TestNG_Framework)
