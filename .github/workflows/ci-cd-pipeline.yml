@@ -20,7 +20,8 @@ jobs:
         uses: actions/setup-java@v2
         with:
           java-version: '11'
-          distribution: 'adoptopenjdk'
+          distribution: 'temurin'
+          java-package: jdk
 
       - name: Cache Maven dependencies
         uses: actions/cache@v2
